@@ -28,6 +28,34 @@ public abstract class GameState {
 		return this.stateHandler.isKeyDown(keyCode);
 	}
 
+	public void input(InputEvent event) {
+		switch (event.getType()) {
+			case KEY_PRESSED:
+				keyPressed(event.getKeyCode());
+				break;
+			case MOUSE_CLICKED:
+				mouseClicked(event.getX(), event.getY(), event.getButton());
+				break;
+			case MOUSE_PRESSED:
+				mousePressed(event.getX(), event.getY(), event.getButton());
+				break;
+			case MOUSE_RELEASED:
+				mouseReleased(event.getX(), event.getY(), event.getButton());
+				break;
+			case MOUSE_DRAGGED:
+				mouseDragged(event.getX(), event.getY());
+				break;
+			case MOUSE_MOVED:
+				mouseMoved(event.getX(), event.getY());
+				break;
+			default:
+				break;
+		}
+	}
+
+	public void unhandled_input(InputEvent event) {
+	}
+
 	public abstract void keyPressed(int keyCode);
 	public abstract void mouseClicked(int x, int y, int button);
 	public abstract void mousePressed(int x, int y, int button);

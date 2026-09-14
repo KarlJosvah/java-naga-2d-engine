@@ -16,6 +16,7 @@ import root.Main;
 import root.gamestate.core.GameState;
 import root.gamestate.core.GameStateHandler;
 import root.gamestate.core.StateID;
+import root.gamestate.core.InputEvent;
 
 public class MenuState extends GameState {
 	public enum MenuOption {
@@ -101,6 +102,17 @@ public class MenuState extends GameState {
 	
 	@Override
 	public void closeState() {
+	}
+
+	@Override
+	public void input(InputEvent event) {
+		super.input(event);
+		if(event.getType() == InputEvent.Type.KEY_PRESSED) {
+			int keyCode = event.getKeyCode();
+			if(keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_ENTER) {
+				event.consume();
+			}
+		}
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import tools.Function;
 import tools.AssetsLoader;
 
 import root.gamestate.core.GameStateHandler;
+import root.gamestate.core.InputEvent;
 
 public class GameLoop {
 	public static final int TARGET_TPS = 60;
@@ -40,6 +41,18 @@ public class GameLoop {
 
 	public void setTPS(long tps) {
 		this.tps = tps;
+	}
+
+	public void queueInput(InputEvent event) {
+		if(this.stateHandler != null) {
+			this.stateHandler.queueInput(event);
+		}
+	}
+
+	public void unhandledInput(InputEvent event) {
+		if(this.mainFrame != null) {
+			this.mainFrame.unhandledInput(event);
+		}
 	}
 
 	public void keyPressed(int keyCode) {

@@ -14,6 +14,7 @@ import javax.swing.SwingUtilities;
 
 import root.listener.KeyListenerMain;
 import root.listener.MouseListenerMain;
+import root.gamestate.core.InputEvent;
 
 import tools.Function;
 
@@ -224,57 +225,64 @@ public class Main extends JFrame implements Runnable {
 // ======================================================================================================================================================
 
 	public void keyPressed(int keyCode, char keyChar) {
-		switch (keyCode) {
-			case KeyEvent.VK_ESCAPE:
-				this.exit();
-				break;
-			case KeyEvent.VK_F1:
-				Main.DEBUG_KEY_LISTENER = !Main.DEBUG_KEY_LISTENER;
-				break;
-			default:
-				break;
-		}
-		if(Main.DEBUG_KEY_LISTENER) {
-			System.out.println(keyCode + " " + keyChar);
-		}
 		if(this.gameLoop != null) {
-			this.gameLoop.keyPressed(keyCode);
+			this.gameLoop.queueInput(InputEvent.createKeyEvent(InputEvent.Type.KEY_PRESSED, keyCode, keyChar));
 		}
 	}
 
 	public void keyReleased(int keyCode) {
 		if(this.gameLoop != null) {
-			this.gameLoop.keyReleased(keyCode);
+			this.gameLoop.queueInput(InputEvent.createKeyEvent(InputEvent.Type.KEY_RELEASED, keyCode, '\0'));
 		}
 	}
 
 	public void mouseClicked(int x, int y, int button) {
 		if(this.gameLoop != null) {
-			this.gameLoop.mouseClicked(x, y, button);
+			this.gameLoop.queueInput(InputEvent.createMouseEvent(InputEvent.Type.MOUSE_CLICKED, x, y, button));
 		}
 	}
 
 	public void mousePressed(int x, int y, int button) {
 		if(this.gameLoop != null) {
-			this.gameLoop.mousePressed(x, y, button);
+			this.gameLoop.queueInput(InputEvent.createMouseEvent(InputEvent.Type.MOUSE_PRESSED, x, y, button));
 		}
 	}
 
 	public void mouseReleased(int x, int y, int button) {
 		if(this.gameLoop != null) {
-			this.gameLoop.mouseReleased(x, y, button);
+			this.gameLoop.queueInput(InputEvent.createMouseEvent(InputEvent.Type.MOUSE_RELEASED, x, y, button));
 		}
 	}
 
 	public void mouseDragged(int x, int y) {
 		if(this.gameLoop != null) {
-			this.gameLoop.mouseDragged(x, y);
+			this.gameLoop.queueInput(InputEvent.createMouseEvent(InputEvent.Type.MOUSE_DRAGGED, x, y, -1));
 		}
 	}
 
 	public void mouseMoved(int x, int y) {
 		if(this.gameLoop != null) {
-			this.gameLoop.mouseMoved(x, y);
+			this.gameLoop.queueInput(InputEvent.createMouseEvent(InputEvent.Type.MOUSE_MOVED, x, y, -1));
+		}
+	}
+
+	public void unhandledInput(InputEvent event) {
+		if(event.getType() == InputEvent.Type.KEY_PRESSED) {
+			switch (event.getKeyCode()) {
+				case KeyEvent.VK_ESCAPE:
+					event.consume();
+					this.exit();
+					break;
+				case KeyEvent.VK_F1:
+					event.consume();
+					Main.DEBUG_KEY_LISTENER = !Main.DEBUG_KEY_LISTENER;
+					break;
+				default:
+					break;
+			}
+			if(Main.DEBUG_KEY_LISTENER) {
+				System.out.println(event.getKeyCode() + " " + event.getKeyChar());
+			}
 		}
 	}
 
