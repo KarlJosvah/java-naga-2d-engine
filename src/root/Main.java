@@ -151,6 +151,10 @@ public class Main extends JFrame implements Runnable {
 		int cachedTargetFps = targetFps;
 		double targetFrameTimeNs = oneSecondNs / targetFps;
 
+		if(targetFps > Function.getDisplayRefreshRate()) {
+			Main.throwException(new Exception("GPU overwork: TARGET_FPS is higher than device refresh rate"));
+		}
+
 		while(this.running) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / timePerTick;

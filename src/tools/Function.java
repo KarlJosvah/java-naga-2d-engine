@@ -64,7 +64,7 @@ public class Function {
 		System.out.println(GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration());
 	}
 
-	private int getDisplayRefreshRate() {
+	public static int getDisplayRefreshRate() {
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		int rate = gd.getDisplayMode().getRefreshRate();
 		return rate == DisplayMode.REFRESH_RATE_UNKNOWN ? 60 : rate;
