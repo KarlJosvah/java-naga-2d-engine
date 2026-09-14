@@ -178,7 +178,11 @@ public class Main extends JFrame implements Runnable {
 
 				if(timeSinceLastRender >= targetFrameTimeNs) {
 					// Time to render a frame
-					lastRenderTime = System.nanoTime(); // Set BEFORE render so VSync wait is counted
+					lastRenderTime += (long) targetFrameTimeNs; // Set BEFORE render so VSync wait is counted
+
+					if(System.nanoTime() - lastRenderTime > (long) targetFrameTimeNs) {
+						lastRenderTime = System.nanoTime();
+					}
 
 					double renderAlpha = delta;
 					this.renderFrame(renderAlpha);
