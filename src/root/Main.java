@@ -147,6 +147,10 @@ public class Main extends JFrame implements Runnable {
 		long nbTickExecuted = 0;
 		long loopID = 0;
 
+		int targetFps = GameLoop.TARGET_FPS;
+		int cachedTargetFps = targetFps;
+		double targetFrameTimeNs = oneSecondNs / targetFps;
+
 		while(this.running) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / timePerTick;
@@ -164,7 +168,11 @@ public class Main extends JFrame implements Runnable {
 				delta--;
 			}
 
-			int targetFps = GameLoop.TARGET_FPS;
+			targetFps = GameLoop.TARGET_FPS;
+			if(targetFps != cachedTargetFps) {
+				cachedTargetFps = targetFps;
+				targetFrameTimeNs = (targetFps > 0) ? oneSecondNs / targetFps : 0;
+			}
 
 			if(targetFps <= 0) {
 				// Unlimited: render every iteration, VSync will naturally cap
@@ -173,7 +181,6 @@ public class Main extends JFrame implements Runnable {
 				nbFrameRendered++;
 				lastRenderTime = System.nanoTime();
 			} else {
-				double targetFrameTimeNs = oneSecondNs / targetFps;
 				long timeSinceLastRender = System.nanoTime() - lastRenderTime;
 
 				if(timeSinceLastRender >= targetFrameTimeNs) {
