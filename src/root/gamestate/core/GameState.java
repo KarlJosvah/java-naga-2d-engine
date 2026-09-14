@@ -41,8 +41,8 @@ public abstract class GameState {
 		this.stateHandler = stateHandler;
 	}
 
-	public final void changeState(GameState newState)	 {
-		this.stateHandler.changeState(newState);
+	public final void changeState(StateID id) {
+		this.stateHandler.changeState(id);
 	}
 
 // ======================================================================================================================================================

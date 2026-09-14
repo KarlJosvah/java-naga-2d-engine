@@ -15,6 +15,7 @@ import root.Main;
 
 import root.gamestate.core.GameState;
 import root.gamestate.core.GameStateHandler;
+import root.gamestate.core.StateID;
 
 public class MenuState extends GameState {
 	public enum MenuOption {
@@ -161,6 +162,7 @@ public class MenuState extends GameState {
 			case CONTINUE:
 				break;
 			case NEW_GAME:
+				this.changeState(StateID.NEW_GAME);
 				break;
 			case SETTINGS:
 				break;

@@ -1,14 +1,19 @@
 package root.gamestate.core;
 
+import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.Map;
 import java.awt.Graphics2D;
 
 import root.GameLoop;
 
+import root.gamestate.MenuState;
 import root.gamestate.NewState;
 
 public class GameStateHandler {
+	private final Map<StateID, GameState> states;
 	private GameState activeState = null;
+	private StateID currentStateID = null;
 	private GameLoop gameLoop = null;
 
 	private HashMap<Integer, Boolean> keyUsed = new HashMap<Integer, Boolean>();
@@ -17,7 +22,10 @@ public class GameStateHandler {
 
 	public GameStateHandler(GameLoop gameLoop) {
 		this.gameLoop = gameLoop;
-		this.changeState(new NewState());
+		this.states = new EnumMap<StateID, GameState>(StateID.class);
+		this.states.put(StateID.MENU, new MenuState());
+		this.states.put(StateID.NEW_GAME, new NewState());
+		this.changeState(StateID.MENU);
 	}
 
 	public void exit() {
@@ -26,10 +34,23 @@ public class GameStateHandler {
 
 // ======================================================================================================================================================
 
-	public void changeState(GameState newState)	 {
+	public void changeState(StateID id) {
+		GameState next = this.states.get(id);
+		if(next == null) {
+			throw new IllegalArgumentException("Unknown state: " + id);
+		}
 		this.closeState();
-		this.activeState = newState;
+		this.currentStateID = id;
+		this.activeState = next;
 		this.init();
+	}
+
+	public StateID getCurrentStateID() {
+		return this.currentStateID;
+	}
+
+	public GameState getState(StateID id) {
+		return this.states.get(id);
 	}
 
 	public void closeState() {
