@@ -2,6 +2,7 @@ package root.gamestate;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import demo.Demo;
 import root.Main;
@@ -18,8 +19,7 @@ public class DemoState extends GameState {
 // ======================================================================================================================================================
 
 	@Override
-	public void init(GameStateHandler stateHandler) {
-		__setGameStateHandler(stateHandler);
+	public void init() {
 		this.demo = new Demo();
 		this.demo.init(Main.WIDTH, Main.HEIGHT);
 	}
@@ -40,6 +40,9 @@ public class DemoState extends GameState {
 
 	@Override
 	public void closeState() {
+		if (this.demo != null) {
+			this.demo.setShooting(false);
+		}
 	}
 
 // ======================================================================================================================================================
@@ -48,9 +51,16 @@ public class DemoState extends GameState {
 	public void input(InputEvent event) {
 		super.input(event);
 
-		if (event.getType() == InputEvent.Type.MOUSE_PRESSED || event.getType() == InputEvent.Type.MOUSE_CLICKED) {
-			if (event.getButton() == 1 && this.demo != null) { // Left click
-				this.demo.shoot(event.getX(), event.getY());
+		if (event.isMouse() && this.demo != null) {
+			if (event.getX() >= 0 && event.getY() >= 0) {
+				this.demo.updateMousePosition(event.getX(), event.getY());
+			}
+
+			if (event.getType() == InputEvent.Type.MOUSE_PRESSED && event.getButton() == MouseEvent.BUTTON1) {
+				this.demo.setShooting(true);
+				event.consume();
+			} else if (event.getType() == InputEvent.Type.MOUSE_RELEASED && event.getButton() == MouseEvent.BUTTON1) {
+				this.demo.setShooting(false);
 				event.consume();
 			}
 		} else if (event.getType() == InputEvent.Type.KEY_PRESSED) {
@@ -72,6 +82,11 @@ public class DemoState extends GameState {
 
 	@Override
 	public void mouseMoved(int x, int y) {
+		super.updateMousePosition(x, y);
+	}
+
+	@Override
+	public void mouseDragged(int x, int y) {
 		super.updateMousePosition(x, y);
 	}
 }

@@ -31,6 +31,12 @@ public class Demo {
 	private int maxTargets = 8;
 	private Random random = new Random();
 
+	private boolean isShooting = false;
+	private int mouseX = -1;
+	private int mouseY = -1;
+	private double shotCooldownTimer = 0.15;
+	private final double fireDelaySeconds = 0.15; // 150ms delay between shots
+
 	public Demo() {
 	}
 
@@ -45,10 +51,23 @@ public class Demo {
 
 		this.killCount = 0;
 		this.targetSpawnTimer = 0;
+		this.isShooting = false;
+		this.shotCooldownTimer = this.fireDelaySeconds;
 
 		// Initial targets spawn
 		for (int i = 0; i < 4; i++) {
 			spawnTarget();
+		}
+	}
+
+	public void setShooting(boolean shooting) {
+		this.isShooting = shooting;
+	}
+
+	public void updateMousePosition(int x, int y) {
+		if (x >= 0 && y >= 0) {
+			this.mouseX = x;
+			this.mouseY = y;
 		}
 	}
 
@@ -113,6 +132,15 @@ public class Demo {
 		camera.setViewportSize(camera.getViewportWidth(), camera.getViewportHeight());
 		camera.follow(player.getCenterX(), player.getCenterY());
 		camera.clamp(map.getWidth(), map.getHeight());
+
+		// 6. Handle Continuous Shooting
+		this.shotCooldownTimer += elapsedSecond;
+		if (this.isShooting && this.mouseX >= 0 && this.mouseY >= 0) {
+			if (this.shotCooldownTimer >= this.fireDelaySeconds) {
+				this.shoot(this.mouseX, this.mouseY);
+				this.shotCooldownTimer = 0;
+			}
+		}
 	}
 
 	private void resolvePlayerCollisions() {
