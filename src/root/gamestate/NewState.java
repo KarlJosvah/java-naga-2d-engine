@@ -17,8 +17,7 @@ public class NewState extends GameState {
 // ======================================================================================================================================================
 
 	@Override
-	public void init(GameStateHandler stateHandler) {
-		__setGameStateHandler(stateHandler);
+	public void init() {
 	}
 
 	@Override

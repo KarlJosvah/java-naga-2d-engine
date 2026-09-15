@@ -19,7 +19,12 @@ public abstract class GameState {
 
 // ======================================================================================================================================================
 
-	public abstract void init(GameStateHandler stateHandler);
+	final void init(GameStateHandler stateHandler) {
+		this.stateHandler = stateHandler;
+		this.init();
+	}
+
+	public abstract void init();
 	public abstract void tick(double elapsedSecond, long loopID);
 	public abstract void render(Graphics2D g, int renderWidth, int renderHeight);
 	public abstract void closeState();
@@ -70,10 +75,6 @@ public abstract class GameState {
 	protected void mouseMoved(int x, int y) {}
 
 // ======================================================================================================================================================
-
-	protected final void __setGameStateHandler(GameStateHandler stateHandler) {
-		this.stateHandler = stateHandler;
-	}
 
 	public final void changeState(StateID id) {
 		this.stateHandler.changeState(id);
