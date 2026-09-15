@@ -1,4 +1,4 @@
-package root.gamestate;
+package gamestate;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -6,9 +6,9 @@ import java.awt.event.MouseEvent;
 
 import demo.Demo;
 import root.Main;
-import root.gamestate.core.GameState;
-import root.gamestate.core.GameStateHandler;
-import root.gamestate.core.InputEvent;
+import gamestate.core.GameState;
+import gamestate.core.GameStateHandler;
+import gamestate.core.InputEvent;
 
 public class DemoState extends GameState {
 	private Demo demo;
@@ -56,10 +56,10 @@ public class DemoState extends GameState {
 				this.demo.updateMousePosition(event.getX(), event.getY());
 			}
 
-			if (event.getType() == InputEvent.Type.MOUSE_PRESSED && event.getButton() == MouseEvent.BUTTON1) {
+			if (event.getType() == InputEvent.Type.MOUSE_PRESSED && event.getButton() == 1) {
 				this.demo.setShooting(true);
 				event.consume();
-			} else if (event.getType() == InputEvent.Type.MOUSE_RELEASED && event.getButton() == MouseEvent.BUTTON1) {
+			} else if (event.getType() == InputEvent.Type.MOUSE_RELEASED && event.getButton() == 1) {
 				this.demo.setShooting(false);
 				event.consume();
 			}

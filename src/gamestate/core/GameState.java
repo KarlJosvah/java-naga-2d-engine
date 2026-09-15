@@ -1,4 +1,4 @@
-package root.gamestate.core;
+package gamestate.core;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -7,8 +7,6 @@ import java.awt.geom.Point2D;
 import java.awt.RadialGradientPaint;
 
 public abstract class GameState {
-
-// ======================================================================================================================================================
 
 	protected GameStateHandler stateHandler;
 

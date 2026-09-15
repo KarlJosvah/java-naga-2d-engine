@@ -1,4 +1,4 @@
-package root.gamestate.core;
+package gamestate.core;
 
 public enum StateID {
 	MENU,

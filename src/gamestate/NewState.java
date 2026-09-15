@@ -1,4 +1,4 @@
-package root.gamestate;
+package gamestate;
 
 import java.awt.Graphics2D;
 
@@ -6,8 +6,8 @@ import java.awt.event.KeyEvent;
 
 import tools.Function;
 
-import root.gamestate.core.GameState;
-import root.gamestate.core.GameStateHandler;
+import gamestate.core.GameState;
+import gamestate.core.GameStateHandler;
 
 public class NewState extends GameState {
 
@@ -28,16 +28,15 @@ public class NewState extends GameState {
 	public void render(Graphics2D g, int renderWidth, int renderHeight) {
 	}
 
+// ======================================================================================================================================================
+	
 	@Override
 	public void closeState() {
 	}
 
-// ======================================================================================================================================================
-	
-
 	@Override
 	public void keyPressed(int keyCode) {
-		if (keyCode == KeyEvent.VK_ENTER) {
+		if(keyCode == KeyEvent.VK_ENTER) {
 		}
 	}
 }

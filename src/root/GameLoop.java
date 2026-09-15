@@ -8,8 +8,8 @@ import java.awt.RenderingHints;
 import tools.Function;
 import tools.AssetsLoader;
 
-import root.gamestate.core.GameStateHandler;
-import root.gamestate.core.InputEvent;
+import gamestate.core.GameStateHandler;
+import gamestate.core.InputEvent;
 
 public class GameLoop {
 

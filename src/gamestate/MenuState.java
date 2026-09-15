@@ -1,4 +1,4 @@
-package root.gamestate;
+package gamestate;
 
 import java.awt.Font;
 import java.awt.Color;
@@ -13,15 +13,12 @@ import tools.AssetsLoader;
 
 import root.Main;
 
-import root.gamestate.core.GameState;
-import root.gamestate.core.GameStateHandler;
-import root.gamestate.core.StateID;
-import root.gamestate.core.InputEvent;
+import gamestate.core.GameState;
+import gamestate.core.GameStateHandler;
+import gamestate.core.StateID;
+import gamestate.core.InputEvent;
 
 public class MenuState extends GameState {
-
-// ======================================================================================================================================================
-
 	public enum MenuOption {
 		CONTINUE("Continue"),
 		NEW_GAME("New Game"),
@@ -39,8 +36,6 @@ public class MenuState extends GameState {
 		}
 	}
 
-// ======================================================================================================================================================
-
 	private Font menuFont = null;
 	private MenuOption[] menuOptions = MenuOption.values();
 	private int selectedIndex = 0;
@@ -52,8 +47,6 @@ public class MenuState extends GameState {
 	private static final String MENU_FONT_FILE_PATH = "Android 101.ttf";
 	private Clip coinSound = null;
 
-// ======================================================================================================================================================
-
 	public MenuState() {
 	}
 
@@ -62,6 +55,24 @@ public class MenuState extends GameState {
 	@Override
 	public void init() {
 		this.loadMenuFont();
+		this.selectedIndex = 0;
+		this.loadCoinSound();
+	}
+
+	private void loadMenuFont() {
+		try {
+			this.menuFont = AssetsLoader.loadFont(MenuState.MENU_FONT_FILE_PATH, Font.BOLD, 40);
+		} catch(Exception e) {
+			Main.throwException(e);
+		}
+	}
+
+	private void loadCoinSound() {
+		try {
+			this.coinSound = AssetsLoader.loadClip(MenuState.COIN_SOUND_FILE_PATH, 80, this);
+		} catch(Exception e) {
+			Main.throwException(e);
+		}
 	}
 
 	@Override
@@ -70,42 +81,17 @@ public class MenuState extends GameState {
 
 	@Override
 	public void render(Graphics2D g, int renderWidth, int renderHeight) {
-		this.renderMenuOptions(g, renderWidth, renderHeight);
-	}
-	
-	@Override
-	public void closeState() {
-	}
+		// super.renderMouseHover(g);
 
-// ======================================================================================================================================================
-
-	private void loadMenuFont() {
-		try {
-			this.menuFont = AssetsLoader.loadFont(MenuState.MENU_FONT_FILE_PATH, Font.BOLD, 40);
-		} catch(Exception e) {
-			Main.throwException(e);
-		}
-		this.selectedIndex = 0;
-
-		try {
-			this.coinSound = AssetsLoader.loadClip(MenuState.COIN_SOUND_FILE_PATH, 80, this);
-		} catch(Exception e) {
-			Main.throwException(e);
-		}
-	}
-
-// ======================================================================================================================================================
-
-	private void renderMenuOptions(Graphics2D g, int renderWidth, int renderHeight) {
-		if (this.menuFont != null) {
+		if(this.menuFont != null) {
 			g.setFont(this.menuFont);
 		}
 
 		int fontHeight = g.getFontMetrics().getHeight();
 		int yOffset = (renderHeight - fontHeight * (menuOptions.length)) / 2;
 
-		for (int i = 0; i < menuOptions.length; i++) {
-			if (i == this.selectedIndex) {
+		for(int i = 0; i < menuOptions.length; i++) {
+			if(i == this.selectedIndex) {
 				g.setColor(MenuState.SELECTED_OPTION_COLOR);
 			} else {
 				g.setColor(MenuState.OPTION_COLOR);
@@ -119,13 +105,17 @@ public class MenuState extends GameState {
 	}
 
 // ======================================================================================================================================================
+	
+	@Override
+	public void closeState() {
+	}
 
 	@Override
 	public void input(InputEvent event) {
 		super.input(event);
-		if (event.getType() == InputEvent.Type.KEY_PRESSED) {
+		if(event.getType() == InputEvent.Type.KEY_PRESSED) {
 			int keyCode = event.getKeyCode();
-			if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_ENTER) {
+			if(keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_ENTER) {
 				event.consume();
 			}
 		}
@@ -133,20 +123,20 @@ public class MenuState extends GameState {
 
 	@Override
 	public void keyPressed(int keyCode) {
-		if (keyCode == KeyEvent.VK_DOWN) {
+		if(keyCode == KeyEvent.VK_DOWN) {
 			this.coinSound();
 			this.selectedIndex++;
-			if (this.selectedIndex >= this.menuOptions.length) {
+			if(this.selectedIndex >= this.menuOptions.length) {
 				this.selectedIndex = 0;
 			}
-		} else if (keyCode == KeyEvent.VK_UP) {
+		} else if(keyCode == KeyEvent.VK_UP) {
 			this.coinSound();
 			this.selectedIndex--;
-			if (this.selectedIndex < 0) {
+			if(this.selectedIndex < 0) {
 				this.selectedIndex = this.menuOptions.length - 1;
 			}
 		}
-		if (keyCode == KeyEvent.VK_ENTER) {
+		if(keyCode == KeyEvent.VK_ENTER) {
 			this.coinSound();
 			this.changeState();
 		}
@@ -160,15 +150,17 @@ public class MenuState extends GameState {
 // ======================================================================================================================================================
 
 	private void coinSound() {
-		if (this.coinSound != null) {
+		if(this.coinSound != null) {
 			this.coinSound.stop();
 			this.coinSound.setFramePosition(0);
 			this.coinSound.start();
 		}
 	}
 
+// ======================================================================================================================================================
+
 	private void changeState() {
-		switch (this.menuOptions[this.selectedIndex]) {
+		switch(this.menuOptions[this.selectedIndex]) {
 			case CONTINUE:
 				break;
 			case NEW_GAME:
