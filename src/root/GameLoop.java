@@ -36,30 +36,6 @@ public class GameLoop {
 
 // ======================================================================================================================================================
 
-	public void setFPS(long fps) {
-		this.fps = fps;
-	}
-
-	public void setTPS(long tps) {
-		this.tps = tps;
-	}
-
-// ======================================================================================================================================================
-
-	public void queueInput(InputEvent event) {
-		if (this.stateHandler != null) {
-			this.stateHandler.queueInput(event);
-		}
-	}
-
-	public void unhandledInput(InputEvent event) {
-		if (this.mainFrame != null) {
-			this.mainFrame.unhandledInput(event);
-		}
-	}
-
-// ======================================================================================================================================================
-
 	public void init() {
 		this.stateHandler = new GameStateHandler(this);
 		this.loadFpsFont();
@@ -104,5 +80,29 @@ public class GameLoop {
 		g.setColor(Color.GREEN);
 		String fpsSTR = "" + Function.numberFormat(this.fps) + " FPS - " + Function.numberFormat(this.tps) + " TPS";
 		g.drawString(fpsSTR, 5, 15);
+	}
+
+// ======================================================================================================================================================
+
+	public void queueInput(InputEvent event) {
+		if (this.stateHandler != null) {
+			this.stateHandler.queueInput(event);
+		}
+	}
+
+	public void unhandledInput(InputEvent event) {
+		if (this.mainFrame != null) {
+			this.mainFrame.unhandledInput(event);
+		}
+	}
+
+// ======================================================================================================================================================
+
+	public void setFPS(long fps) {
+		this.fps = fps;
+	}
+
+	public void setTPS(long tps) {
+		this.tps = tps;
 	}
 }

@@ -32,42 +32,26 @@ public class GameStateHandler {
 		this.changeState(StateID.MENU);
 	}
 
-	public void exit() {
-		this.gameLoop.exit();
-	}
-
-// ======================================================================================================================================================
-
-	public void changeState(StateID id) {
-		GameState next = this.states.get(id);
-		if(next == null) {
-			throw new IllegalArgumentException("Unknown state: " + id);
-		}
-		this.closeState();
-		this.currentStateID = id;
-		this.activeState = next;
-		this.init();
-	}
-
-	public StateID getCurrentStateID() {
-		return this.currentStateID;
-	}
-
-	public GameState getState(StateID id) {
-		return this.states.get(id);
-	}
-
-	public void closeState() {
-		if(this.activeState != null) {
-			this.activeState.closeState();
-		}
-	}
-
 // ======================================================================================================================================================
 
 	public void init() {
 		this.activeState.init(this);
 	}
+
+	public void tick(double elapsedSecond, long loopID) {
+		this.processInput();
+		this.activeState.tick(elapsedSecond, loopID);
+	}
+
+	public void render(Graphics2D g, int renderWidth, int renderHeight) {
+		this.activeState.render(g, renderWidth, renderHeight);
+	}
+
+	public void exit() {
+		this.gameLoop.exit();
+	}
+
+// ======================================================================================================================================================
 
 	public void queueInput(InputEvent event) {
 		this.inputQueue.add(event);
@@ -96,21 +80,37 @@ public class GameStateHandler {
 		}
 	}
 
-	public void tick(double elapsedSecond, long loopID) {
-		this.processInput();
-		this.activeState.tick(elapsedSecond, loopID);
-	}
-
-	public void render(Graphics2D g, int renderWidth, int renderHeight) {
-		this.activeState.render(g, renderWidth, renderHeight);
-	}
-
-// ======================================================================================================================================================
-
 	public boolean isKeyDown(int keyCode) {
 		if(!this.keyUsed.containsKey(keyCode)) {
 			return false;
 		}
 		return this.keyUsed.get(keyCode);
+	}
+
+// ======================================================================================================================================================
+
+	public void changeState(StateID id) {
+		GameState next = this.states.get(id);
+		if(next == null) {
+			throw new IllegalArgumentException("Unknown state: " + id);
+		}
+		this.closeState();
+		this.currentStateID = id;
+		this.activeState = next;
+		this.init();
+	}
+
+	public StateID getCurrentStateID() {
+		return this.currentStateID;
+	}
+
+	public GameState getState(StateID id) {
+		return this.states.get(id);
+	}
+
+	public void closeState() {
+		if(this.activeState != null) {
+			this.activeState.closeState();
+		}
 	}
 }
