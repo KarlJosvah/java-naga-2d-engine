@@ -28,15 +28,15 @@ public class NewState extends GameState {
 	public void render(Graphics2D g, int renderWidth, int renderHeight) {
 	}
 
-// ======================================================================================================================================================
-	
 	@Override
 	public void closeState() {
 	}
 
+// ======================================================================================================================================================
+	
 	@Override
 	public void keyPressed(int keyCode) {
-		if(keyCode == KeyEvent.VK_ENTER) {
+		if (keyCode == KeyEvent.VK_ENTER) {
 		}
 	}
 }

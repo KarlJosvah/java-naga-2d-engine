@@ -56,10 +56,10 @@ public class DemoState extends GameState {
 				this.demo.updateMousePosition(event.getX(), event.getY());
 			}
 
-			if (event.getType() == InputEvent.Type.MOUSE_PRESSED && event.getButton() == 1) {
+			if (event.getType() == InputEvent.Type.MOUSE_PRESSED && event.getButton() == MouseEvent.BUTTON1) {
 				this.demo.setShooting(true);
 				event.consume();
-			} else if (event.getType() == InputEvent.Type.MOUSE_RELEASED && event.getButton() == 1) {
+			} else if (event.getType() == InputEvent.Type.MOUSE_RELEASED && event.getButton() == MouseEvent.BUTTON1) {
 				this.demo.setShooting(false);
 				event.consume();
 			}
