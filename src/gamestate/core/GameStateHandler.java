@@ -1,6 +1,5 @@
 package gamestate.core;
 
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -16,7 +15,7 @@ public class GameStateHandler {
 
 // ======================================================================================================================================================
 
-	private final Map<StateID, GameState> states;
+	private static final Map<StateID, GameState> states = new HashMap<StateID, GameState>();
 	private final ConcurrentLinkedQueue<InputEvent> inputQueue = new ConcurrentLinkedQueue<InputEvent>();
 	private GameState activeState = null;
 	private StateID currentStateID = null;
@@ -28,16 +27,22 @@ public class GameStateHandler {
 
 	public GameStateHandler(GameLoop gameLoop) {
 		this.gameLoop = gameLoop;
-		this.states = new EnumMap<StateID, GameState>(StateID.class);
 		this.init();
 	}
 
 // ======================================================================================================================================================
 
+	public static void registerState(StateID id, GameState state) {
+		if (id == null || state == null) {
+			throw new IllegalArgumentException("StateID and GameState cannot be null");
+		}
+		GameStateHandler.states.put(id, state);
+	}
+
 	public void init() {
-		this.states.put(StateID.MENU, new MenuState());
-		this.states.put(StateID.NEW_GAME, new NewState());
-		this.states.put(StateID.DEMO, new DemoState());
+		GameStateHandler.registerState(StateID.MENU, new MenuState());
+		GameStateHandler.registerState(StateID.NEW_GAME, new NewState());
+		GameStateHandler.registerState(StateID.DEMO, new DemoState());
 		this.changeState(StateID.MENU);
 	}
 
@@ -57,7 +62,7 @@ public class GameStateHandler {
 // ======================================================================================================================================================
 
 	public void changeState(StateID id) {
-		GameState next = this.states.get(id);
+		GameState next = GameStateHandler.states.get(id);
 		if (next == null) {
 			throw new IllegalArgumentException("Unknown state: " + id);
 		}
@@ -71,8 +76,8 @@ public class GameStateHandler {
 		return this.currentStateID;
 	}
 
-	public GameState getState(StateID id) {
-		return this.states.get(id);
+	public static GameState getState(StateID id) {
+		return GameStateHandler.states.get(id);
 	}
 
 	public void closeState() {
