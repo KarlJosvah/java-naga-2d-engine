@@ -10,6 +10,7 @@ import root.GameLoop;
 
 import root.gamestate.MenuState;
 import root.gamestate.NewState;
+import root.gamestate.DemoState;
 
 public class GameStateHandler {
 	private final Map<StateID, GameState> states;
@@ -27,6 +28,7 @@ public class GameStateHandler {
 		this.states = new EnumMap<StateID, GameState>(StateID.class);
 		this.states.put(StateID.MENU, new MenuState());
 		this.states.put(StateID.NEW_GAME, new NewState());
+		this.states.put(StateID.DEMO, new DemoState());
 		this.changeState(StateID.MENU);
 	}
 

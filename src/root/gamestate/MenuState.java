@@ -174,7 +174,7 @@ public class MenuState extends GameState {
 			case CONTINUE:
 				break;
 			case NEW_GAME:
-				this.changeState(StateID.NEW_GAME);
+				this.changeState(StateID.DEMO);
 				break;
 			case SETTINGS:
 				break;
