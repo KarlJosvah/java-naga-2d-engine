@@ -18,6 +18,8 @@ import gamestate.core.GameStateHandler;
 import gamestate.core.StateID;
 import gamestate.core.InputEvent;
 
+import demo.DemoState;
+
 public class MenuState extends GameState {
 
 // ======================================================================================================================================================
@@ -172,7 +174,7 @@ public class MenuState extends GameState {
 			case CONTINUE:
 				break;
 			case NEW_GAME:
-				this.changeState(StateID.DEMO);
+				this.changeState(DemoState.ID);
 				break;
 			case SETTINGS:
 				break;

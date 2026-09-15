@@ -9,7 +9,6 @@ import root.GameLoop;
 
 import gamestate.MenuState;
 import gamestate.NewState;
-import gamestate.DemoState;
 
 public class GameStateHandler {
 
@@ -42,7 +41,6 @@ public class GameStateHandler {
 	public void init() {
 		GameStateHandler.registerState(StateID.MENU, new MenuState());
 		GameStateHandler.registerState(StateID.NEW_GAME, new NewState());
-		GameStateHandler.registerState(StateID.DEMO, new DemoState());
 		this.changeState(StateID.MENU);
 	}
 

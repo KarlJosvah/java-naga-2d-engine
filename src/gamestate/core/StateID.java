@@ -16,7 +16,6 @@ public final class StateID {
 	// Built-in state IDs
 	public static final StateID MENU = StateID.of("MENU");
 	public static final StateID NEW_GAME = StateID.of("NEW_GAME");
-	public static final StateID DEMO = StateID.of("DEMO");
 
 	public String getId() {
 		return id;

@@ -1,16 +1,22 @@
-package gamestate;
+package demo;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import demo.Demo;
 import root.Main;
 import gamestate.core.GameState;
 import gamestate.core.GameStateHandler;
 import gamestate.core.InputEvent;
+import gamestate.core.StateID;
 
 public class DemoState extends GameState {
+	public static final StateID ID = StateID.of("DEMO");
+
+	static {
+		GameStateHandler.registerState(DemoState.ID, new DemoState());
+	}
+
 	private Demo demo;
 
 	public DemoState() {
