@@ -79,14 +79,4 @@ public class DemoState extends GameState {
 			}
 		}
 	}
-
-	@Override
-	public void mouseMoved(int x, int y) {
-		super.updateMousePosition(x, y);
-	}
-
-	@Override
-	public void mouseDragged(int x, int y) {
-		super.updateMousePosition(x, y);
-	}
 }

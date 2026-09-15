@@ -34,6 +34,10 @@ public abstract class GameState {
 	}
 
 	public void input(InputEvent event) {
+		if (event.isMouse() && event.getX() >= 0 && event.getY() >= 0) {
+			updateMousePosition(event.getX(), event.getY());
+		}
+
 		switch (event.getType()) {
 			case KEY_PRESSED:
 				keyPressed(event.getKeyCode());
