@@ -40,7 +40,7 @@ public class Function {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice gd = ge.getDefaultScreenDevice();
 
-		if(gd.isFullScreenSupported()) {
+		if (gd.isFullScreenSupported()) {
 			gd.setFullScreenWindow(frame);
 		} else {
 			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -51,9 +51,9 @@ public class Function {
 	public static void showOnScreen(int screen, JFrame frame) {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice[] gs = ge.getScreenDevices();
-		if(screen > -1 && screen < gs.length) {
+		if (screen > -1 && screen < gs.length) {
 			gs[screen].setFullScreenWindow(frame);
-		} else if(gs.length > 0) {
+		} else if (gs.length > 0) {
 			gs[0].setFullScreenWindow(frame);
 		} else {
 			throw new RuntimeException("No Screens Found");
@@ -90,8 +90,8 @@ public class Function {
 		String result = "";
 		char[] charArray = str.toCharArray();
 		int count = 0;
-		for(int i = charArray.length - 1; i >= 0; i--) {
-			if(count == inBetween) {
+		for (int i = charArray.length - 1; i >= 0; i--) {
+			if (count == inBetween) {
 				result = separator + result;
 				count = 0;
 			}
@@ -120,7 +120,7 @@ public class Function {
 // ======================================================================================================================================================
 
 	public static Color getColorFromHex(String hexColor) {
-		if(hexColor.startsWith("#")) {
+		if (hexColor.startsWith("#")) {
 			hexColor = hexColor.substring(1);
 		}
 		int rgb = Integer.parseInt(hexColor, 16);
@@ -128,7 +128,7 @@ public class Function {
 	}
 
 	public static void print(Object... toPrint) {
-		for(Object obj: toPrint) {
+		for (Object obj: toPrint) {
 			System.out.print(obj.toString() + "\t\t");
 		}
 		System.out.println();
@@ -150,11 +150,11 @@ public class Function {
 
 	public static BufferedImage openImage(String filePath) throws IOException {
 		File file = new File(filePath);
-		if(file.exists()) {
+		if (file.exists()) {
 			return ImageIO.read(file);
 		}
 		try(java.io.InputStream is = Function.class.getClassLoader().getResourceAsStream(filePath)) {
-			if(is != null) {
+			if (is != null) {
 				return ImageIO.read(is);
 			}
 		}
@@ -182,9 +182,9 @@ public class Function {
 		Vector<String> array = new Vector<String>();
 
 		String temp = "";
-		while(true) {
+		while (true) {
 			temp = bReader.readLine();
-			if(temp == null) {
+			if (temp == null) {
 				break;
 			}
 			array.add(temp);
@@ -193,7 +193,7 @@ public class Function {
 		bReader.close();
 
 		String[] result = new String[array.size()];
-		for(int i=0; i<result.length; i++) {
+		for (int i=0; i<result.length; i++) {
 			result[i] = array.elementAt(i);
 		}
 		return result;

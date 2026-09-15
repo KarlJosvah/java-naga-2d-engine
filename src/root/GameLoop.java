@@ -47,13 +47,13 @@ public class GameLoop {
 // ======================================================================================================================================================
 
 	public void queueInput(InputEvent event) {
-		if(this.stateHandler != null) {
+		if (this.stateHandler != null) {
 			this.stateHandler.queueInput(event);
 		}
 	}
 
 	public void unhandledInput(InputEvent event) {
-		if(this.mainFrame != null) {
+		if (this.mainFrame != null) {
 			this.mainFrame.unhandledInput(event);
 		}
 	}
@@ -98,7 +98,7 @@ public class GameLoop {
 	}
 
 	private void displayFPS(Graphics2D g) {
-		if(this.fpsFont != null) {
+		if (this.fpsFont != null) {
 			g.setFont(this.fpsFont);
 		}
 		g.setColor(Color.GREEN);

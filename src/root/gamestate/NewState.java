@@ -37,7 +37,7 @@ public class NewState extends GameState {
 
 	@Override
 	public void keyPressed(int keyCode) {
-		if(keyCode == KeyEvent.VK_ENTER) {
+		if (keyCode == KeyEvent.VK_ENTER) {
 		}
 	}
 }

@@ -58,7 +58,7 @@ public class GameStateHandler {
 
 	public void changeState(StateID id) {
 		GameState next = this.states.get(id);
-		if(next == null) {
+		if (next == null) {
 			throw new IllegalArgumentException("Unknown state: " + id);
 		}
 		this.closeState();
@@ -76,7 +76,7 @@ public class GameStateHandler {
 	}
 
 	public void closeState() {
-		if(this.activeState != null) {
+		if (this.activeState != null) {
 			this.activeState.closeState();
 		}
 	}
@@ -89,29 +89,29 @@ public class GameStateHandler {
 
 	public void processInput() {
 		InputEvent event;
-		while((event = this.inputQueue.poll()) != null) {
-			if(event.getType() == InputEvent.Type.KEY_PRESSED) {
+		while ((event = this.inputQueue.poll()) != null) {
+			if (event.getType() == InputEvent.Type.KEY_PRESSED) {
 				this.keyUsed.put(event.getKeyCode(), true);
-			} else if(event.getType() == InputEvent.Type.KEY_RELEASED) {
+			} else if (event.getType() == InputEvent.Type.KEY_RELEASED) {
 				this.keyUsed.put(event.getKeyCode(), false);
 			}
 
-			if(this.activeState != null) {
+			if (this.activeState != null) {
 				this.activeState.input(event);
 			}
 
-			if(!event.isHandled() && this.activeState != null) {
+			if (!event.isHandled() && this.activeState != null) {
 				this.activeState.unhandled_input(event);
 			}
 
-			if(!event.isHandled() && this.gameLoop != null) {
+			if (!event.isHandled() && this.gameLoop != null) {
 				this.gameLoop.unhandledInput(event);
 			}
 		}
 	}
 
 	public boolean isKeyDown(int keyCode) {
-		if(!this.keyUsed.containsKey(keyCode)) {
+		if (!this.keyUsed.containsKey(keyCode)) {
 			return false;
 		}
 		return this.keyUsed.get(keyCode);

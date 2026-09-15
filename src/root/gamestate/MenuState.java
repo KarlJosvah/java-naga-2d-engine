@@ -97,15 +97,15 @@ public class MenuState extends GameState {
 // ======================================================================================================================================================
 
 	private void renderMenuOptions(Graphics2D g, int renderWidth, int renderHeight) {
-		if(this.menuFont != null) {
+		if (this.menuFont != null) {
 			g.setFont(this.menuFont);
 		}
 
 		int fontHeight = g.getFontMetrics().getHeight();
 		int yOffset = (renderHeight - fontHeight * (menuOptions.length)) / 2;
 
-		for(int i = 0; i < menuOptions.length; i++) {
-			if(i == this.selectedIndex) {
+		for (int i = 0; i < menuOptions.length; i++) {
+			if (i == this.selectedIndex) {
 				g.setColor(MenuState.SELECTED_OPTION_COLOR);
 			} else {
 				g.setColor(MenuState.OPTION_COLOR);
@@ -123,9 +123,9 @@ public class MenuState extends GameState {
 	@Override
 	public void input(InputEvent event) {
 		super.input(event);
-		if(event.getType() == InputEvent.Type.KEY_PRESSED) {
+		if (event.getType() == InputEvent.Type.KEY_PRESSED) {
 			int keyCode = event.getKeyCode();
-			if(keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_ENTER) {
+			if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_ENTER) {
 				event.consume();
 			}
 		}
@@ -133,20 +133,20 @@ public class MenuState extends GameState {
 
 	@Override
 	public void keyPressed(int keyCode) {
-		if(keyCode == KeyEvent.VK_DOWN) {
+		if (keyCode == KeyEvent.VK_DOWN) {
 			this.coinSound();
 			this.selectedIndex++;
-			if(this.selectedIndex >= this.menuOptions.length) {
+			if (this.selectedIndex >= this.menuOptions.length) {
 				this.selectedIndex = 0;
 			}
-		} else if(keyCode == KeyEvent.VK_UP) {
+		} else if (keyCode == KeyEvent.VK_UP) {
 			this.coinSound();
 			this.selectedIndex--;
-			if(this.selectedIndex < 0) {
+			if (this.selectedIndex < 0) {
 				this.selectedIndex = this.menuOptions.length - 1;
 			}
 		}
-		if(keyCode == KeyEvent.VK_ENTER) {
+		if (keyCode == KeyEvent.VK_ENTER) {
 			this.coinSound();
 			this.changeState();
 		}
@@ -160,7 +160,7 @@ public class MenuState extends GameState {
 // ======================================================================================================================================================
 
 	private void coinSound() {
-		if(this.coinSound != null) {
+		if (this.coinSound != null) {
 			this.coinSound.stop();
 			this.coinSound.setFramePosition(0);
 			this.coinSound.start();
@@ -168,7 +168,7 @@ public class MenuState extends GameState {
 	}
 
 	private void changeState() {
-		switch(this.menuOptions[this.selectedIndex]) {
+		switch (this.menuOptions[this.selectedIndex]) {
 			case CONTINUE:
 				break;
 			case NEW_GAME:

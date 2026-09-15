@@ -101,14 +101,14 @@ public class Main extends JFrame implements Runnable {
 // ======================================================================================================================================================
 
 	public synchronized void start() {
-		if(this.running) return;
+		if (this.running) return;
 		this.running = true;
 		this.gameThread = new Thread(this, "GameLoop-Thread");
 		this.gameThread.start();
 	}
 
 	public synchronized void stop() {
-		if(!this.running) return;
+		if (!this.running) return;
 		this.running = false;
 	}
 
@@ -121,7 +121,7 @@ public class Main extends JFrame implements Runnable {
 // ======================================================================================================================================================
 
 	public void renderFrame(double renderAlpha) {
-		if(this.bufferStrategy == null) return;
+		if (this.bufferStrategy == null) return;
 		do {
 			do {
 				Graphics2D g = (Graphics2D) this.bufferStrategy.getDrawGraphics();
@@ -130,9 +130,9 @@ public class Main extends JFrame implements Runnable {
 				} finally {
 					g.dispose();
 				}
-			} while(this.bufferStrategy.contentsRestored());
+			} while (this.bufferStrategy.contentsRestored());
 			this.bufferStrategy.show();
-		} while(this.bufferStrategy.contentsLost());
+		} while (this.bufferStrategy.contentsLost());
 
 		Toolkit.getDefaultToolkit().sync();
 	}
@@ -158,20 +158,20 @@ public class Main extends JFrame implements Runnable {
 		int cachedTargetFps = targetFps;
 		double targetFrameTimeNs = oneSecondNs / targetFps;
 
-		if(targetFps > Function.getDisplayRefreshRate()) {
+		if (targetFps > Function.getDisplayRefreshRate()) {
 			Main.throwException(new Exception("GPU overwork: TARGET_FPS is higher than device refresh rate"));
 		}
 
-		while(this.running) {
+		while (this.running) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / timePerTick;
 			lastTime = now;
 
-			if(delta > maxDeltaSkip) {
+			if (delta > maxDeltaSkip) {
 				delta = maxDeltaSkip;
 			}
 
-			while(delta >= 1) {
+			while (delta >= 1) {
 				double elapsedSecond = (1.0 / GameLoop.TARGET_TPS);
 				this.gameLoop.tick(elapsedSecond, loopID);
 				nbTickExecuted++;
@@ -180,12 +180,12 @@ public class Main extends JFrame implements Runnable {
 			}
 
 			targetFps = GameLoop.TARGET_FPS;
-			if(targetFps != cachedTargetFps) {
+			if (targetFps != cachedTargetFps) {
 				cachedTargetFps = targetFps;
 				targetFrameTimeNs = (targetFps > 0) ? oneSecondNs / targetFps : 0;
 			}
 
-			if(targetFps <= 0) {
+			if (targetFps <= 0) {
 				// Unlimited: render every iteration, VSync will naturally cap
 				double renderAlpha = delta;
 				this.renderFrame(renderAlpha);
@@ -194,11 +194,11 @@ public class Main extends JFrame implements Runnable {
 			} else {
 				long timeSinceLastRender = System.nanoTime() - lastRenderTime;
 
-				if(timeSinceLastRender >= targetFrameTimeNs) {
+				if (timeSinceLastRender >= targetFrameTimeNs) {
 					// Time to render a frame
 					lastRenderTime += (long) targetFrameTimeNs; // Set BEFORE render so VSync wait is counted
 
-					if(System.nanoTime() - lastRenderTime > (long) targetFrameTimeNs) {
+					if (System.nanoTime() - lastRenderTime > (long) targetFrameTimeNs) {
 						lastRenderTime = System.nanoTime();
 					}
 
@@ -208,17 +208,17 @@ public class Main extends JFrame implements Runnable {
 				} else {
 					// Sleep to avoid busy-spinning; yield the CPU until close to target time
 					long remainingNs = (long) (targetFrameTimeNs - timeSinceLastRender);
-					if(remainingNs > 2_000_000L) {
+					if (remainingNs > 2_000_000L) {
 						// Sleep for most of the remaining time, leaving ~1ms margin for precision
 						LockSupport.parkNanos(remainingNs - 1_000_000L);
-					} else if(remainingNs > 0) {
+					} else if (remainingNs > 0) {
 						// Close enough — spin-wait for precision
 						Thread.onSpinWait();
 					}
 				}
 			}
 
-			if(System.currentTimeMillis() - lastTimer >= 1000) {
+			if (System.currentTimeMillis() - lastTimer >= 1000) {
 				lastTimer += 1000;
 				this.gameLoop.setFPS(nbFrameRendered);
 				this.gameLoop.setTPS(nbTickExecuted);
@@ -231,49 +231,49 @@ public class Main extends JFrame implements Runnable {
 // ======================================================================================================================================================
 
 	public void keyPressed(int keyCode, char keyChar) {
-		if(this.gameLoop != null) {
+		if (this.gameLoop != null) {
 			this.gameLoop.queueInput(InputEvent.createKeyEvent(InputEvent.Type.KEY_PRESSED, keyCode, keyChar));
 		}
 	}
 
 	public void keyReleased(int keyCode) {
-		if(this.gameLoop != null) {
+		if (this.gameLoop != null) {
 			this.gameLoop.queueInput(InputEvent.createKeyEvent(InputEvent.Type.KEY_RELEASED, keyCode, '\0'));
 		}
 	}
 
 	public void mouseClicked(int x, int y, int button) {
-		if(this.gameLoop != null) {
+		if (this.gameLoop != null) {
 			this.gameLoop.queueInput(InputEvent.createMouseEvent(InputEvent.Type.MOUSE_CLICKED, x, y, button));
 		}
 	}
 
 	public void mousePressed(int x, int y, int button) {
-		if(this.gameLoop != null) {
+		if (this.gameLoop != null) {
 			this.gameLoop.queueInput(InputEvent.createMouseEvent(InputEvent.Type.MOUSE_PRESSED, x, y, button));
 		}
 	}
 
 	public void mouseReleased(int x, int y, int button) {
-		if(this.gameLoop != null) {
+		if (this.gameLoop != null) {
 			this.gameLoop.queueInput(InputEvent.createMouseEvent(InputEvent.Type.MOUSE_RELEASED, x, y, button));
 		}
 	}
 
 	public void mouseDragged(int x, int y) {
-		if(this.gameLoop != null) {
+		if (this.gameLoop != null) {
 			this.gameLoop.queueInput(InputEvent.createMouseEvent(InputEvent.Type.MOUSE_DRAGGED, x, y, -1));
 		}
 	}
 
 	public void mouseMoved(int x, int y) {
-		if(this.gameLoop != null) {
+		if (this.gameLoop != null) {
 			this.gameLoop.queueInput(InputEvent.createMouseEvent(InputEvent.Type.MOUSE_MOVED, x, y, -1));
 		}
 	}
 
 	public void unhandledInput(InputEvent event) {
-		if(event.getType() == InputEvent.Type.KEY_PRESSED) {
+		if (event.getType() == InputEvent.Type.KEY_PRESSED) {
 			switch (event.getKeyCode()) {
 				case KeyEvent.VK_ESCAPE:
 					event.consume();
@@ -286,7 +286,7 @@ public class Main extends JFrame implements Runnable {
 				default:
 					break;
 			}
-			if(Main.DEBUG_KEY_LISTENER) {
+			if (Main.DEBUG_KEY_LISTENER) {
 				System.out.println(event.getKeyCode() + " " + event.getKeyChar());
 			}
 		}

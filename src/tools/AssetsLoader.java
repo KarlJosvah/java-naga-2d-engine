@@ -54,12 +54,12 @@ public class AssetsLoader {
 
 	public static Font loadFont(String filePath, int style, int size) throws FontFormatException, IOException {
 		File file = new File(AssetsLoader.FONT_FILE_PATH + filePath);
-		if(file.exists()) {
+		if (file.exists()) {
 			Font font = Font.createFont(Font.TRUETYPE_FONT, file);
 			return font.deriveFont(style, (float) size);
 		}
 		try(InputStream is = AssetsLoader.class.getClassLoader().getResourceAsStream(AssetsLoader.FONT_FILE_PATH + filePath)) {
-			if(is != null) {
+			if (is != null) {
 				Font font = Font.createFont(Font.TRUETYPE_FONT, is);
 				return font.deriveFont(style, (float) size);
 			}
@@ -74,15 +74,15 @@ public class AssetsLoader {
 		AudioInputStream inputStream = null;
 
 		File file = new File(AssetsLoader.CLIP_FILE_PATH + filePath);
-		if(file.exists()) {
+		if (file.exists()) {
 			inputStream = AudioSystem.getAudioInputStream(file);
 		} else {
 			String resourcePath = "/" + AssetsLoader.CLIP_FILE_PATH + filePath;
 			InputStream is = source != null ? source.getClass().getResourceAsStream(resourcePath) : null;
-			if(is == null) {
+			if (is == null) {
 				is = AssetsLoader.class.getClassLoader().getResourceAsStream(AssetsLoader.CLIP_FILE_PATH + filePath);
 			}
-			if(is != null) {
+			if (is != null) {
 				inputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(is));
 			} else {
 				throw new FileNotFoundException("Audio clip file not found: " + filePath);

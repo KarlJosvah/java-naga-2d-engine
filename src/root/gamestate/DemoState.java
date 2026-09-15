@@ -65,7 +65,7 @@ public class DemoState extends GameState {
 			}
 		} else if (event.getType() == InputEvent.Type.KEY_PRESSED) {
 			int k = event.getKeyCode();
-			if(java.util.Set.of(
+			if (java.util.Set.of(
 				KeyEvent.VK_W,
 				KeyEvent.VK_A,
 				KeyEvent.VK_S,
