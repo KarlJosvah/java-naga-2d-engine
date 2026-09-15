@@ -12,6 +12,9 @@ import root.gamestate.core.GameStateHandler;
 import root.gamestate.core.InputEvent;
 
 public class GameLoop {
+
+// ======================================================================================================================================================
+
 	public static final int TARGET_TPS = 60;
 	public static volatile int TARGET_FPS = 120;
 	public static final Color DEFAULT_BG_COLOR = Color.BLACK;
@@ -24,13 +27,11 @@ public class GameLoop {
 
 	private Font fpsFont = null;
 
+// ======================================================================================================================================================
+
 	public GameLoop(Main mainFrame) {
 		this.mainFrame = mainFrame;
 		this.init();
-	}
-
-	public void exit() {
-		this.mainFrame.exit();
 	}
 
 // ======================================================================================================================================================
@@ -42,6 +43,8 @@ public class GameLoop {
 	public void setTPS(long tps) {
 		this.tps = tps;
 	}
+
+// ======================================================================================================================================================
 
 	public void queueInput(InputEvent event) {
 		if(this.stateHandler != null) {
@@ -59,6 +62,27 @@ public class GameLoop {
 
 	public void init() {
 		this.stateHandler = new GameStateHandler(this);
+		this.loadFpsFont();
+	}
+
+	public void tick(double elapsedSecond, long loopID) {
+		this.stateHandler.tick(elapsedSecond, loopID);
+	}
+
+	public void render(Graphics2D g, int width, int height) {
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		this.clearCanvas(g, width, height);
+		this.stateHandler.render(g, width, height);
+		this.displayFPS(g);
+	}
+
+	public void exit() {
+		this.mainFrame.exit();
+	}
+
+// ======================================================================================================================================================
+
+	private void loadFpsFont() {
 		try {
 			this.fpsFont = AssetsLoader.loadFont("Android 101.ttf", Font.BOLD, 12);
 		} catch(Exception e) {
@@ -68,20 +92,9 @@ public class GameLoop {
 
 // ======================================================================================================================================================
 
-	public void tick(double elapsedSecond, long loopID) {
-		this.stateHandler.tick(elapsedSecond, loopID);
-	}
-
-// ======================================================================================================================================================
-
-	public void render(Graphics2D g, int width, int height) {
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	private void clearCanvas(Graphics2D g, int width, int height) {
 		g.setColor(GameLoop.DEFAULT_BG_COLOR);
 		g.fillRect(0, 0, width, height);
-
-		this.stateHandler.render(g, width, height);
-
-		this.displayFPS(g);
 	}
 
 	private void displayFPS(Graphics2D g) {

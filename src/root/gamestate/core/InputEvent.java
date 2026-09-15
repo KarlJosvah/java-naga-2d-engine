@@ -1,6 +1,9 @@
 package root.gamestate.core;
 
 public class InputEvent {
+
+// ======================================================================================================================================================
+	
 	public enum Type {
 		KEY_PRESSED,
 		KEY_RELEASED,
@@ -12,6 +15,9 @@ public class InputEvent {
 		MOUSE_MOVED
 	}
 
+// ======================================================================================================================================================
+	
+
 	private final Type type;
 	private final int keyCode;
 	private final char keyChar;
@@ -19,6 +25,9 @@ public class InputEvent {
 	private final int y;
 	private final int button;
 	private boolean handled = false;
+
+// ======================================================================================================================================================
+	
 
 	public InputEvent(Type type, int keyCode, char keyChar, int x, int y, int button) {
 		this.type = type;
@@ -29,6 +38,9 @@ public class InputEvent {
 		this.button = button;
 	}
 
+// ======================================================================================================================================================
+	
+
 	public static InputEvent createKeyEvent(Type type, int keyCode, char keyChar) {
 		return new InputEvent(type, keyCode, keyChar, -1, -1, -1);
 	}
@@ -36,6 +48,9 @@ public class InputEvent {
 	public static InputEvent createMouseEvent(Type type, int x, int y, int button) {
 		return new InputEvent(type, -1, '\0', x, y, button);
 	}
+
+// ======================================================================================================================================================
+	
 
 	public Type getType() {
 		return type;
@@ -61,6 +76,9 @@ public class InputEvent {
 		return button;
 	}
 
+// ======================================================================================================================================================
+	
+
 	public boolean isHandled() {
 		return handled;
 	}
@@ -72,6 +90,9 @@ public class InputEvent {
 	public void markHandled() {
 		this.handled = true;
 	}
+
+// ======================================================================================================================================================
+	
 
 	public boolean isKey() {
 		return type == Type.KEY_PRESSED || type == Type.KEY_RELEASED || type == Type.KEY_TYPED;

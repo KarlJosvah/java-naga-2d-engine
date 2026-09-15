@@ -8,6 +8,8 @@ import java.awt.RadialGradientPaint;
 
 public abstract class GameState {
 
+// ======================================================================================================================================================
+
 	protected GameStateHandler stateHandler;
 
 	private int mousePositionX = -1;

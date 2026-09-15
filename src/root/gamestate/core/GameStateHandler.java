@@ -13,6 +13,9 @@ import root.gamestate.NewState;
 import root.gamestate.DemoState;
 
 public class GameStateHandler {
+
+// ======================================================================================================================================================
+
 	private final Map<StateID, GameState> states;
 	private final ConcurrentLinkedQueue<InputEvent> inputQueue = new ConcurrentLinkedQueue<InputEvent>();
 	private GameState activeState = null;
@@ -26,10 +29,25 @@ public class GameStateHandler {
 	public GameStateHandler(GameLoop gameLoop) {
 		this.gameLoop = gameLoop;
 		this.states = new EnumMap<StateID, GameState>(StateID.class);
+		this.init();
+	}
+
+// ======================================================================================================================================================
+
+	public void init() {
 		this.states.put(StateID.MENU, new MenuState());
 		this.states.put(StateID.NEW_GAME, new NewState());
 		this.states.put(StateID.DEMO, new DemoState());
 		this.changeState(StateID.MENU);
+	}
+
+	public void tick(double elapsedSecond, long loopID) {
+		this.processInput();
+		this.activeState.tick(elapsedSecond, loopID);
+	}
+
+	public void render(Graphics2D g, int renderWidth, int renderHeight) {
+		this.activeState.render(g, renderWidth, renderHeight);
 	}
 
 	public void exit() {
@@ -46,7 +64,7 @@ public class GameStateHandler {
 		this.closeState();
 		this.currentStateID = id;
 		this.activeState = next;
-		this.init();
+		this.activeState.init(this);
 	}
 
 	public StateID getCurrentStateID() {
@@ -64,10 +82,6 @@ public class GameStateHandler {
 	}
 
 // ======================================================================================================================================================
-
-	public void init() {
-		this.activeState.init(this);
-	}
 
 	public void queueInput(InputEvent event) {
 		this.inputQueue.add(event);
@@ -95,17 +109,6 @@ public class GameStateHandler {
 			}
 		}
 	}
-
-	public void tick(double elapsedSecond, long loopID) {
-		this.processInput();
-		this.activeState.tick(elapsedSecond, loopID);
-	}
-
-	public void render(Graphics2D g, int renderWidth, int renderHeight) {
-		this.activeState.render(g, renderWidth, renderHeight);
-	}
-
-// ======================================================================================================================================================
 
 	public boolean isKeyDown(int keyCode) {
 		if(!this.keyUsed.containsKey(keyCode)) {

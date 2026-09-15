@@ -25,6 +25,9 @@ import sun.java2d.pipe.hw.ExtendedBufferCapabilities;
 import sun.java2d.pipe.hw.ExtendedBufferCapabilities.VSyncType;
 
 public class Main extends JFrame implements Runnable {
+
+// ======================================================================================================================================================
+
 	public static final String TITLE = "A Java Game";
 	public static final int WIDTH = (int) Function.getScreenResolution().getWidth();
 	public static final int HEIGHT = (int) Function.getScreenResolution().getHeight();
@@ -58,17 +61,16 @@ public class Main extends JFrame implements Runnable {
 	public Main() {
 		this.init();
 		this.config();
-		// this.setVisible(true);
 		Function.setFullScreenExclusive(this);
-		// Function.getDefaultConfiguration();
 
 		this.createUnsyncedBufferStrategy();
-		// this.canvas.createBufferStrategy(3);
 		this.bufferStrategy = this.canvas.getBufferStrategy();
 		this.canvas.requestFocus();
 
 		this.gameLoop = new GameLoop(this);
 	}
+
+// ======================================================================================================================================================
 
 	private void init() {
 		this.setTitle(Main.TITLE);
@@ -95,6 +97,8 @@ public class Main extends JFrame implements Runnable {
 		this.canvas.addMouseListener(mouseListener);
 		this.canvas.addMouseMotionListener(mouseListener);
 	}
+
+// ======================================================================================================================================================
 
 	public synchronized void start() {
 		if(this.running) return;
@@ -132,6 +136,8 @@ public class Main extends JFrame implements Runnable {
 
 		Toolkit.getDefaultToolkit().sync();
 	}
+
+// ======================================================================================================================================================
 
 	@Override
 	public void run() {

@@ -19,6 +19,9 @@ import root.gamestate.core.StateID;
 import root.gamestate.core.InputEvent;
 
 public class MenuState extends GameState {
+
+// ======================================================================================================================================================
+
 	public enum MenuOption {
 		CONTINUE("Continue"),
 		NEW_GAME("New Game"),
@@ -36,6 +39,8 @@ public class MenuState extends GameState {
 		}
 	}
 
+// ======================================================================================================================================================
+
 	private Font menuFont = null;
 	private MenuOption[] menuOptions = MenuOption.values();
 	private int selectedIndex = 0;
@@ -47,6 +52,8 @@ public class MenuState extends GameState {
 	private static final String MENU_FONT_FILE_PATH = "Android 101.ttf";
 	private Clip coinSound = null;
 
+// ======================================================================================================================================================
+
 	public MenuState() {
 	}
 
@@ -55,6 +62,25 @@ public class MenuState extends GameState {
 	@Override
 	public void init(GameStateHandler stateHandler) {
 		__setGameStateHandler(stateHandler);
+		this.loadMenuFont();
+	}
+
+	@Override
+	public void tick(double elapsedSecond, long loopID) {
+	}
+
+	@Override
+	public void render(Graphics2D g, int renderWidth, int renderHeight) {
+		this.renderMenuOptions(g, renderWidth, renderHeight);
+	}
+	
+	@Override
+	public void closeState() {
+	}
+
+// ======================================================================================================================================================
+
+	private void loadMenuFont() {
 		try {
 			this.menuFont = AssetsLoader.loadFont(MenuState.MENU_FONT_FILE_PATH, Font.BOLD, 40);
 		} catch(Exception e) {
@@ -69,14 +95,9 @@ public class MenuState extends GameState {
 		}
 	}
 
-	@Override
-	public void tick(double elapsedSecond, long loopID) {
-	}
+// ======================================================================================================================================================
 
-	@Override
-	public void render(Graphics2D g, int renderWidth, int renderHeight) {
-		// super.renderMouseHover(g);
-
+	private void renderMenuOptions(Graphics2D g, int renderWidth, int renderHeight) {
 		if(this.menuFont != null) {
 			g.setFont(this.menuFont);
 		}
@@ -99,10 +120,6 @@ public class MenuState extends GameState {
 	}
 
 // ======================================================================================================================================================
-	
-	@Override
-	public void closeState() {
-	}
 
 	@Override
 	public void input(InputEvent event) {
@@ -150,8 +167,6 @@ public class MenuState extends GameState {
 			this.coinSound.start();
 		}
 	}
-
-// ======================================================================================================================================================
 
 	private void changeState() {
 		switch(this.menuOptions[this.selectedIndex]) {
