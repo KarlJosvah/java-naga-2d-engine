@@ -71,26 +71,6 @@ public class DemoState extends GameState {
 	}
 
 	@Override
-	public void keyPressed(int keyCode) {
-	}
-
-	@Override
-	public void mouseClicked(int x, int y, int button) {
-	}
-
-	@Override
-	public void mousePressed(int x, int y, int button) {
-	}
-
-	@Override
-	public void mouseReleased(int x, int y, int button) {
-	}
-
-	@Override
-	public void mouseDragged(int x, int y) {
-	}
-
-	@Override
 	public void mouseMoved(int x, int y) {
 		super.updateMousePosition(x, y);
 	}

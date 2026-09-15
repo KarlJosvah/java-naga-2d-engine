@@ -107,39 +107,10 @@ public class GameStateHandler {
 
 // ======================================================================================================================================================
 
-	public void keyPressed(int keyCode) {
-		this.activeState.keyPressed(keyCode);
-		this.keyUsed.put(keyCode, true);
-	}
-
-	public void keyReleased(int keyCode) {
-		this.keyUsed.put(keyCode, false);
-	}
-
 	public boolean isKeyDown(int keyCode) {
 		if(!this.keyUsed.containsKey(keyCode)) {
 			return false;
 		}
 		return this.keyUsed.get(keyCode);
-	}
-
-	public void mouseClicked(int x, int y, int button) {
-		this.activeState.mouseClicked(x, y, button);
-	}
-
-	public void mousePressed(int x, int y, int button) {
-		this.activeState.mousePressed(x, y, button);
-	}
-
-	public void mouseReleased(int x, int y, int button) {
-		this.activeState.mouseReleased(x, y, button);
-	}
-
-	public void mouseDragged(int x, int y) {
-		this.activeState.mouseDragged(x, y);
-	}
-
-	public void mouseMoved(int x, int y) {
-		this.activeState.mouseMoved(x, y);
 	}
 }

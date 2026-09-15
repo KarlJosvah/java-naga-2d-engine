@@ -55,34 +55,6 @@ public class GameLoop {
 		}
 	}
 
-	public void keyPressed(int keyCode) {
-		this.stateHandler.keyPressed(keyCode);
-	}
-
-	public void keyReleased(int keyCode) {
-		this.stateHandler.keyReleased(keyCode);
-	}
-
-	public void mouseClicked(int x, int y, int button) {
-		this.stateHandler.mouseClicked(x, y, button);
-	}
-
-	public void mousePressed(int x, int y, int button) {
-		this.stateHandler.mousePressed(x, y, button);
-	}
-
-	public void mouseReleased(int x, int y, int button) {
-		this.stateHandler.mouseReleased(x, y, button);
-	}
-
-	public void mouseDragged(int x, int y) {
-		this.stateHandler.mouseDragged(x, y);
-	}
-
-	public void mouseMoved(int x, int y) {
-		this.stateHandler.mouseMoved(x, y);
-	}
-
 // ======================================================================================================================================================
 
 	public void init() {

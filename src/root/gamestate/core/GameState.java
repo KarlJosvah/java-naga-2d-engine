@@ -33,6 +33,9 @@ public abstract class GameState {
 			case KEY_PRESSED:
 				keyPressed(event.getKeyCode());
 				break;
+			case KEY_RELEASED:
+				keyReleased(event.getKeyCode());
+				break;
 			case MOUSE_CLICKED:
 				mouseClicked(event.getX(), event.getY(), event.getButton());
 				break;
@@ -56,12 +59,13 @@ public abstract class GameState {
 	public void unhandled_input(InputEvent event) {
 	}
 
-	public abstract void keyPressed(int keyCode);
-	public abstract void mouseClicked(int x, int y, int button);
-	public abstract void mousePressed(int x, int y, int button);
-	public abstract void mouseReleased(int x, int y, int button);
-	public abstract void mouseDragged(int x, int y);
-	public abstract void mouseMoved(int x, int y);
+	protected void keyPressed(int keyCode) {}
+	protected void keyReleased(int keyCode) {}
+	protected void mouseClicked(int x, int y, int button) {}
+	protected void mousePressed(int x, int y, int button) {}
+	protected void mouseReleased(int x, int y, int button) {}
+	protected void mouseDragged(int x, int y) {}
+	protected void mouseMoved(int x, int y) {}
 
 // ======================================================================================================================================================
 

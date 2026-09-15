@@ -40,24 +40,4 @@ public class NewState extends GameState {
 		if(keyCode == KeyEvent.VK_ENTER) {
 		}
 	}
-
-	@Override
-	public void mouseClicked(int x, int y, int button) {
-	}
-
-	@Override
-	public void mousePressed(int x, int y, int button) {
-	}
-
-	@Override
-	public void mouseReleased(int x, int y, int button) {
-	}
-
-	@Override
-	public void mouseDragged(int x, int y) {
-	}
-
-	@Override
-	public void mouseMoved(int x, int y) {
-	}
 }
