@@ -14,7 +14,7 @@ import javax.swing.SwingUtilities;
 
 import root.listener.KeyListenerMain;
 import root.listener.MouseListenerMain;
-import gamestate.core.InputEvent;
+import gamestate.InputEvent;
 
 import tools.Function;
 

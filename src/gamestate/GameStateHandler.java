@@ -1,4 +1,4 @@
-package gamestate.core;
+package gamestate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,9 +24,9 @@ public class GameStateHandler {
 
 // ======================================================================================================================================================
 
-	public GameStateHandler(GameLoop gameLoop) {
+	public GameStateHandler(GameLoop gameLoop, StateID defaultStateID) {
 		this.gameLoop = gameLoop;
-		this.init();
+		this.init(defaultStateID);
 	}
 
 // ======================================================================================================================================================
@@ -38,10 +38,9 @@ public class GameStateHandler {
 		GameStateHandler.states.put(id, state);
 	}
 
-	public void init() {
-		GameStateHandler.registerState(StateID.MENU, new MenuState());
+	public void init(StateID defaultStateID) {
 		GameStateHandler.registerState(StateID.NEW_GAME, new NewState());
-		this.changeState(StateID.MENU);
+		this.changeState(defaultStateID);
 	}
 
 	public void tick(double elapsedSecond, long loopID) {

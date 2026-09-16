@@ -1,4 +1,4 @@
-package gamestate.core;
+package gamestate;
 
 import java.util.Objects;
 
@@ -14,7 +14,6 @@ public final class StateID {
 	}
 
 	// Built-in state IDs
-	public static final StateID MENU = StateID.of("MENU");
 	public static final StateID NEW_GAME = StateID.of("NEW_GAME");
 
 	public String getId() {

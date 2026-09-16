@@ -1,16 +1,20 @@
 package demo;
 
+import java.util.Set;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import root.Main;
-import gamestate.core.GameState;
-import gamestate.core.GameStateHandler;
-import gamestate.core.InputEvent;
-import gamestate.core.StateID;
+import gamestate.GameState;
+import gamestate.GameStateHandler;
+import gamestate.InputEvent;
+import gamestate.StateID;
 
 public class DemoState extends GameState {
+
+// ======================================================================================================================================================
+
 	public static final StateID ID = StateID.of("DEMO");
 
 	static {
@@ -19,10 +23,10 @@ public class DemoState extends GameState {
 
 	private Demo demo;
 
+// ======================================================================================================================================================
+
 	public DemoState() {
 	}
-
-// ======================================================================================================================================================
 
 	@Override
 	public void init() {
@@ -71,7 +75,7 @@ public class DemoState extends GameState {
 			}
 		} else if (event.getType() == InputEvent.Type.KEY_PRESSED) {
 			int k = event.getKeyCode();
-			if (java.util.Set.of(
+			if (Set.of(
 				KeyEvent.VK_W,
 				KeyEvent.VK_A,
 				KeyEvent.VK_S,

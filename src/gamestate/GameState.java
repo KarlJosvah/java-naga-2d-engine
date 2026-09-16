@@ -1,4 +1,4 @@
-package gamestate.core;
+package gamestate;
 
 import java.awt.Color;
 import java.awt.Point;

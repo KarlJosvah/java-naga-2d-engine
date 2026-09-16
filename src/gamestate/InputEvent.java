@@ -1,4 +1,4 @@
-package gamestate.core;
+package gamestate;
 
 public class InputEvent {
 

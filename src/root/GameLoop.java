@@ -8,8 +8,9 @@ import java.awt.RenderingHints;
 import tools.Function;
 import tools.AssetsLoader;
 
-import gamestate.core.GameStateHandler;
-import gamestate.core.InputEvent;
+import gamestate.GameStateHandler;
+import gamestate.InputEvent;
+import root.MenuState;
 
 public class GameLoop {
 
@@ -37,7 +38,7 @@ public class GameLoop {
 // ======================================================================================================================================================
 
 	public void init() {
-		this.stateHandler = new GameStateHandler(this);
+		this.stateHandler = new GameStateHandler(this, MenuState.ID);
 		this.loadFpsFont();
 	}
 

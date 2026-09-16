@@ -6,8 +6,8 @@ import java.awt.event.KeyEvent;
 
 import tools.Function;
 
-import gamestate.core.GameState;
-import gamestate.core.GameStateHandler;
+import gamestate.GameState;
+import gamestate.GameStateHandler;
 
 public class NewState extends GameState {
 

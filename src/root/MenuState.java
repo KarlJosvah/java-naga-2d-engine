@@ -1,4 +1,4 @@
-package gamestate;
+package root;
 
 import java.awt.Font;
 import java.awt.Color;
@@ -13,10 +13,10 @@ import tools.AssetsLoader;
 
 import root.Main;
 
-import gamestate.core.GameState;
-import gamestate.core.GameStateHandler;
-import gamestate.core.StateID;
-import gamestate.core.InputEvent;
+import gamestate.GameState;
+import gamestate.GameStateHandler;
+import gamestate.StateID;
+import gamestate.InputEvent;
 
 import demo.DemoState;
 
@@ -24,9 +24,18 @@ public class MenuState extends GameState {
 
 // ======================================================================================================================================================
 
+	public static final StateID ID = StateID.of("MENU");
+	
+	static {
+		GameStateHandler.registerState(MenuState.ID, new MenuState());
+	}
+
+// ======================================================================================================================================================
+
 	public enum MenuOption {
 		CONTINUE("Continue"),
 		NEW_GAME("New Game"),
+		DEMO("Play Demo"),
 		SETTINGS("Settings"),
 		QUIT_GAME("Quit Game");
 
@@ -174,6 +183,9 @@ public class MenuState extends GameState {
 			case CONTINUE:
 				break;
 			case NEW_GAME:
+				this.changeState(StateID.NEW_GAME);
+				break;
+			case DEMO:
 				this.changeState(DemoState.ID);
 				break;
 			case SETTINGS:
