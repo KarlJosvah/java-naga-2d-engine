@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.awt.Graphics2D;
 
+import root.Main;
 import root.GameLoop;
 
-import gamestate.MenuState;
 import gamestate.NewState;
 
 public class GameStateHandler {
@@ -15,6 +15,8 @@ public class GameStateHandler {
 // ======================================================================================================================================================
 
 	private static final Map<StateID, GameState> states = new HashMap<StateID, GameState>();
+	private static StateID defaultStateID = null;
+
 	private final ConcurrentLinkedQueue<InputEvent> inputQueue = new ConcurrentLinkedQueue<InputEvent>();
 	private GameState activeState = null;
 	private StateID currentStateID = null;
@@ -24,32 +26,54 @@ public class GameStateHandler {
 
 // ======================================================================================================================================================
 
+	public static void setDefaultStateID(StateID id) {
+		GameStateHandler.defaultStateID = id;
+	}
+
+	public static StateID getDefaultStateID() {
+		return GameStateHandler.defaultStateID;
+	}
+
+// ======================================================================================================================================================
+
 	public GameStateHandler(GameLoop gameLoop, StateID defaultStateID) {
 		this.gameLoop = gameLoop;
 		this.init(defaultStateID);
+	}
+
+	public GameStateHandler(GameLoop gameLoop) {
+		this(gameLoop, GameStateHandler.defaultStateID);
 	}
 
 // ======================================================================================================================================================
 
 	public static void registerState(StateID id, GameState state) {
 		if (id == null || state == null) {
-			throw new IllegalArgumentException("StateID and GameState cannot be null");
+			Main.throwException(new IllegalArgumentException("StateID and GameState cannot be null"));
 		}
 		GameStateHandler.states.put(id, state);
 	}
 
 	public void init(StateID defaultStateID) {
 		GameStateHandler.registerState(StateID.NEW_GAME, new NewState());
-		this.changeState(defaultStateID);
+		StateID targetState = (defaultStateID != null) ? defaultStateID : GameStateHandler.defaultStateID;
+		if (targetState == null) {
+			Main.throwException(new IllegalStateException("Default StateID is not set in GameStateHandler!"));
+		}
+		this.changeState(targetState);
 	}
 
 	public void tick(double elapsedSecond, long loopID) {
 		this.processInput();
-		this.activeState.tick(elapsedSecond, loopID);
+		if (this.activeState != null) {
+			this.activeState.tick(elapsedSecond, loopID);
+		}
 	}
 
 	public void render(Graphics2D g, int renderWidth, int renderHeight) {
-		this.activeState.render(g, renderWidth, renderHeight);
+		if (this.activeState != null) {
+			this.activeState.render(g, renderWidth, renderHeight);
+		}
 	}
 
 	public void exit() {
@@ -61,7 +85,8 @@ public class GameStateHandler {
 	public void changeState(StateID id) {
 		GameState next = GameStateHandler.states.get(id);
 		if (next == null) {
-			throw new IllegalArgumentException("Unknown state: " + id);
+			Main.throwException(new IllegalArgumentException("Unknown state: " + id));
+			return;
 		}
 		this.closeState();
 		this.currentStateID = id;

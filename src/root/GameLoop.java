@@ -38,7 +38,7 @@ public class GameLoop {
 // ======================================================================================================================================================
 
 	public void init() {
-		this.stateHandler = new GameStateHandler(this, MenuState.ID);
+		this.stateHandler = new GameStateHandler(this, GameStateHandler.getDefaultStateID());
 		this.loadFpsFont();
 	}
 

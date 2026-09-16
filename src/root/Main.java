@@ -45,6 +45,7 @@ public class Main extends JFrame implements Runnable {
 
 	public static void main(String[] args) {
 		Main.enableHighResolutionTimer();
+		Main.initApp();
 
 		System.setProperty("sun.java2d.opengl", "true"); // Force OpenGL pipeline
 		System.setProperty("sun.java2d.d3d", "false"); // Disable Direct3D if on Windows
@@ -54,6 +55,22 @@ public class Main extends JFrame implements Runnable {
 			Main main = new Main();
 			main.start();
 		});
+	}
+
+	private static void initApp() {
+		try {
+			Class<?> appClass = Class.forName("App");
+			try {
+				java.lang.reflect.Method initMethod = appClass.getMethod("init");
+				initMethod.invoke(null);
+			} catch (NoSuchMethodException ignored) {
+				Main.throwException(new Exception("App does not have a static init() method"));
+			}
+		} catch (ClassNotFoundException e) {
+			Main.throwException(new Exception("Notice: 'App' class not found in root package."));
+		} catch (Exception e) {
+			Main.throwException(e);
+		}
 	}
 
 // ======================================================================================================================================================
@@ -295,7 +312,7 @@ public class Main extends JFrame implements Runnable {
 // ======================================================================================================================================================
 
 	public static void throwException(Exception e) {
-		// Do Nothing for now
+		System.err.println(e.getMessage());
 		// e.printStackTrace();
 	}
 
