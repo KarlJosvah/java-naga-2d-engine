@@ -10,7 +10,6 @@ import engine.tools.AssetsLoader;
 
 import engine.gamestate.GameStateHandler;
 import engine.gamestate.InputEvent;
-import engine.MenuState;
 
 public class GameLoop {
 

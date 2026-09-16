@@ -1,0 +1,25 @@
+@echo off
+echo Building naga-engine.jar ...
+
+if not exist "lib" mkdir lib
+if not exist "bin" mkdir bin
+if exist "bin\engine" rmdir /s /q bin\engine
+if exist "bin-engine" rmdir /s /q bin-engine
+mkdir bin-engine
+
+dir /s /b src\engine\*.java > engine_sources.txt
+javac --add-exports java.desktop/sun.java2d.pipe.hw=ALL-UNNAMED -encoding UTF-8 -cp "lib/*" -d bin-engine/ @engine_sources.txt
+del engine_sources.txt
+
+jar cf lib/naga-engine.jar -C bin-engine/ .
+rmdir /s /q bin-engine
+
+echo Compiling Application ...
+
+dir /s /b src\*.java | findstr /v /i "\\src\\engine\\" > app_sources.txt
+javac --add-exports java.desktop/sun.java2d.pipe.hw=ALL-UNNAMED -encoding UTF-8 -cp "lib/*;lib/naga-engine.jar" -d bin/ @app_sources.txt
+del app_sources.txt
+
+echo Running Engine ...
+
+java --add-exports java.desktop/sun.java2d.pipe.hw=ALL-UNNAMED -Djava.library.path="lib" -cp ".;bin/;lib/*" engine.Main
