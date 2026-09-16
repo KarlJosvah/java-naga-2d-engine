@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.awt.Graphics2D;
 
-import root.Main;
-import root.GameLoop;
+import engine.Main;
+import engine.GameLoop;
 
 import gamestate.NewState;
 

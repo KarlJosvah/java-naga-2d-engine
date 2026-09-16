@@ -1,5 +1,5 @@
 import gamestate.GameStateHandler;
-import root.MenuState;
+import engine.MenuState;
 import demo.DemoState;
 
 public class App {

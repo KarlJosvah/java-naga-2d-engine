@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import root.Main;
+import engine.Main;
 import gamestate.GameState;
 import gamestate.GameStateHandler;
 import gamestate.InputEvent;

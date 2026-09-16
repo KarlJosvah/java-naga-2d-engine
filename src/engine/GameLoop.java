@@ -1,4 +1,4 @@
-package root;
+package engine;
 
 import java.awt.Font;
 import java.awt.Color;
@@ -10,7 +10,7 @@ import tools.AssetsLoader;
 
 import gamestate.GameStateHandler;
 import gamestate.InputEvent;
-import root.MenuState;
+import engine.MenuState;
 
 public class GameLoop {
 

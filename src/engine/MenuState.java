@@ -1,4 +1,4 @@
-package root;
+package engine;
 
 import java.awt.Font;
 import java.awt.Color;
@@ -11,7 +11,7 @@ import javax.sound.sampled.Clip;
 import tools.Function;
 import tools.AssetsLoader;
 
-import root.Main;
+import engine.Main;
 
 import gamestate.GameState;
 import gamestate.GameStateHandler;

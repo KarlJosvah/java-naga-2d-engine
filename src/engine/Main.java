@@ -1,4 +1,4 @@
-package root;
+package engine;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -12,8 +12,8 @@ import java.util.concurrent.locks.LockSupport;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import root.listener.KeyListenerMain;
-import root.listener.MouseListenerMain;
+import engine.listener.KeyListenerMain;
+import engine.listener.MouseListenerMain;
 import gamestate.InputEvent;
 
 import tools.Function;
