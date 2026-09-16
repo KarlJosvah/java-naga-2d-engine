@@ -6,10 +6,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import engine.Main;
-import gamestate.GameState;
-import gamestate.GameStateHandler;
-import gamestate.InputEvent;
-import gamestate.StateID;
+import engine.gamestate.GameState;
+import engine.gamestate.GameStateHandler;
+import engine.gamestate.InputEvent;
+import engine.gamestate.StateID;
 
 public class DemoState extends GameState {
 

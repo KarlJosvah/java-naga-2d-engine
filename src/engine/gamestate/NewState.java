@@ -1,13 +1,13 @@
-package gamestate;
+package engine.gamestate;
 
 import java.awt.Graphics2D;
 
 import java.awt.event.KeyEvent;
 
-import tools.Function;
+import engine.tools.Function;
 
-import gamestate.GameState;
-import gamestate.GameStateHandler;
+import engine.gamestate.GameState;
+import engine.gamestate.GameStateHandler;
 
 public class NewState extends GameState {
 

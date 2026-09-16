@@ -1,4 +1,4 @@
-package gamestate;
+package engine.gamestate;
 
 public class InputEvent {
 

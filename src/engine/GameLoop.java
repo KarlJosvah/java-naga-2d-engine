@@ -5,11 +5,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-import tools.Function;
-import tools.AssetsLoader;
+import engine.tools.Function;
+import engine.tools.AssetsLoader;
 
-import gamestate.GameStateHandler;
-import gamestate.InputEvent;
+import engine.gamestate.GameStateHandler;
+import engine.gamestate.InputEvent;
 import engine.MenuState;
 
 public class GameLoop {

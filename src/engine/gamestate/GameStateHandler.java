@@ -1,4 +1,4 @@
-package gamestate;
+package engine.gamestate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +8,7 @@ import java.awt.Graphics2D;
 import engine.Main;
 import engine.GameLoop;
 
-import gamestate.NewState;
+import engine.gamestate.NewState;
 
 public class GameStateHandler {
 

@@ -8,15 +8,15 @@ import java.awt.event.KeyEvent;
 
 import javax.sound.sampled.Clip;
 
-import tools.Function;
-import tools.AssetsLoader;
+import engine.tools.Function;
+import engine.tools.AssetsLoader;
 
 import engine.Main;
 
-import gamestate.GameState;
-import gamestate.GameStateHandler;
-import gamestate.StateID;
-import gamestate.InputEvent;
+import engine.gamestate.GameState;
+import engine.gamestate.GameStateHandler;
+import engine.gamestate.StateID;
+import engine.gamestate.InputEvent;
 
 import demo.DemoState;
 

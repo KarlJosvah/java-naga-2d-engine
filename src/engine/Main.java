@@ -14,9 +14,9 @@ import javax.swing.SwingUtilities;
 
 import engine.listener.KeyListenerMain;
 import engine.listener.MouseListenerMain;
-import gamestate.InputEvent;
+import engine.gamestate.InputEvent;
 
-import tools.Function;
+import engine.tools.Function;
 
 import java.awt.BufferCapabilities;
 import java.awt.GraphicsConfiguration;

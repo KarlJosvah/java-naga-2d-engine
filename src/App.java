@@ -1,4 +1,4 @@
-import gamestate.GameStateHandler;
+import engine.gamestate.GameStateHandler;
 import engine.MenuState;
 import demo.DemoState;
 
