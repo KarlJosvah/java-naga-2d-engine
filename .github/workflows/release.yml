@@ -1,0 +1,60 @@
+name: Release Naga Engine & Demo
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  release:
+    name: Build and Create Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Build naga-engine.jar
+        run: |
+          mkdir -p bin-engine lib
+          find src/engine -name "*.java" > engine_sources.txt
+          javac -source 11 -target 11 --add-exports java.desktop/sun.java2d.pipe.hw=ALL-UNNAMED -encoding UTF-8 -cp "lib/*" -d bin-engine/ @engine_sources.txt
+          jar cf lib/naga-engine.jar -C bin-engine/ .
+          rm -rf bin-engine engine_sources.txt
+
+      - name: Build Demo Application
+        run: |
+          mkdir -p bin
+          find src -name "*.java" | grep -v "src/engine/" > app_sources.txt
+          javac -source 11 -target 11 --add-exports java.desktop/sun.java2d.pipe.hw=ALL-UNNAMED -encoding UTF-8 -cp "lib/*:lib/naga-engine.jar" -d bin/ @app_sources.txt
+          rm app_sources.txt
+
+      - name: Prepare Demo Bundle Zip
+        run: |
+          mkdir -p demo-bundle/src
+          cp -r src/demo demo-bundle/src/
+          cp src/App.java demo-bundle/src/
+          cp -r bin demo-bundle/
+          cp -r lib demo-bundle/
+          [ -d assets ] && cp -r assets demo-bundle/ || true
+          [ -f run.bat.example ] && cp run.bat.example demo-bundle/ || true
+          cd demo-bundle && zip -r ../naga-demo-bundle.zip . && cd ..
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: release-notes/${{ github.ref_name }}.md
+          files: |
+            lib/naga-engine.jar
+            naga-demo-bundle.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
