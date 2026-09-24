@@ -1,3 +1,11 @@
+![Status: WIP](https://img.shields.io/badge/status-work_in_progress-orange?style=for-the-badge)
+![Stage: Alpha](https://img.shields.io/badge/stage-alpha-red?style=for-the-badge)
+
+> [!WARNING]
+> **Active Development / Work in Progress**
+> This engine is currently in early-stage development and is **not yet ready for production or general use**. Features, APIs, and structure are changing rapidly without backward compatibility.
+
+
 # Java Naga 2D Engine
 
 A modular, lightweight 2D game engine for Java, built on AWT/Swing graphics, providing hardware acceleration, flexible state management, and a high-precision game loop.
