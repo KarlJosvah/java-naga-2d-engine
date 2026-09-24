@@ -17,7 +17,7 @@ public class GameLoop {
 
 	public static final int TARGET_TPS = 60;
 	public static volatile int TARGET_FPS = 120;
-	public static final Color DEFAULT_BG_COLOR = Color.BLACK;
+	public static Color DEFAULT_BG_COLOR = Color.BLACK;
 
 	private Main mainFrame = null;
 	private GameStateHandler stateHandler = null;
@@ -32,6 +32,24 @@ public class GameLoop {
 	public GameLoop(Main mainFrame) {
 		this.mainFrame = mainFrame;
 		this.init();
+	}
+
+// ======================================================================================================================================================
+
+	public static void setTargetFPS(int targetFPS) {
+		GameLoop.TARGET_FPS = Math.max(20, targetFPS);
+	}
+
+	public static int getTargetFPS() {
+		return GameLoop.TARGET_FPS;
+	}
+
+	public static void setDefaultBackgroundColor(Color bg) {
+		GameLoop.DEFAULT_BG_COLOR = bg;
+	}
+
+	public static Color getDefaultBackgroundColor() {
+		return GameLoop.DEFAULT_BG_COLOR;
 	}
 
 // ======================================================================================================================================================

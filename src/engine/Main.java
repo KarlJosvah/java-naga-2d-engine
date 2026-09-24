@@ -33,6 +33,7 @@ public class Main extends JFrame implements Runnable {
 	public static final int HEIGHT = (int) Function.getScreenResolution().getHeight();
 
 	public static volatile boolean DEBUG_KEY_LISTENER = false;
+	public static volatile boolean VSYNC = true;
 
 	private Canvas canvas;
 	private BufferStrategy bufferStrategy;
@@ -80,11 +81,25 @@ public class Main extends JFrame implements Runnable {
 		this.config();
 		Function.setFullScreenExclusive(this);
 
-		this.createUnsyncedBufferStrategy();
+		if(Main.VSYNC) {
+			this.createUnsyncedBufferStrategy();
+		} else {
+			this.canvas.createBufferStrategy(3);
+		}
 		this.bufferStrategy = this.canvas.getBufferStrategy();
 		this.canvas.requestFocus();
 
 		this.gameLoop = new GameLoop(this);
+	}
+
+// ======================================================================================================================================================
+
+	public static void VSYNC(boolean activate) {
+		Main.VSYNC = activate;
+	}
+
+	public static boolean VSYNC() {
+		return Main.VSYNC;
 	}
 
 // ======================================================================================================================================================
