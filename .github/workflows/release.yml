@@ -25,7 +25,8 @@ jobs:
 
       - name: Build naga-engine.jar
         run: |
-          mkdir -p bin-engine lib
+          mkdir -p bin-engine/assets/fonts lib
+          cp -r assets/fonts/* bin-engine/assets/fonts/ 2>/dev/null || true
           find src/engine -name "*.java" > engine_sources.txt
           javac -source 11 -target 11 --add-exports java.desktop/sun.java2d.pipe.hw=ALL-UNNAMED -encoding UTF-8 -cp "lib/*" -d bin-engine/ @engine_sources.txt
           jar cf lib/naga-engine.jar -C bin-engine/ .

@@ -6,6 +6,9 @@ if not exist "bin" mkdir bin
 if exist "bin\engine" rmdir /s /q bin\engine
 if exist "bin-engine" rmdir /s /q bin-engine
 mkdir bin-engine
+mkdir bin-engine\assets\fonts
+
+xcopy /s /y /q assets\fonts\* bin-engine\assets\fonts\ >nul
 
 dir /s /b src\engine\*.java > engine_sources.txt
 javac --add-exports java.desktop/sun.java2d.pipe.hw=ALL-UNNAMED -encoding UTF-8 -cp "lib/*" -d bin-engine/ @engine_sources.txt
