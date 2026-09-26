@@ -22,6 +22,16 @@ public class AssetsLoader {
 	public static final String TEXT_FILE_PATH = "assets/text/";
 	public static final String CLIP_FILE_PATH = "assets/sounds/";
 
+	public static Font font_android_101 = null;
+
+	static {
+		try {
+			font_android_101 = AssetsLoader.loadFont("Android 101.ttf", Font.PLAIN, 12);
+		} catch (Exception e) {
+			System.err.println("Failed to load static font Android 101.ttf: " + e.getMessage());
+		}
+	}
+
 // ======================================================================================================================================================
 
 	public static BufferedImage loadImage(String filePath) throws IOException {

@@ -60,7 +60,6 @@ public class MenuState extends GameState {
 	public static final Color SELECTED_OPTION_COLOR = Function.getColorFromHex("#0206BA");
 
 	private static final String COIN_SOUND_FILE_PATH = "pickup-coin-2.wav";
-	private static final String MENU_FONT_FILE_PATH = "Android 101.ttf";
 	private Clip coinSound = null;
 
 // ======================================================================================================================================================
@@ -92,10 +91,8 @@ public class MenuState extends GameState {
 // ======================================================================================================================================================
 
 	private void loadMenuAssets() {
-		try {
-			this.menuFont = AssetsLoader.loadFont(MenuState.MENU_FONT_FILE_PATH, Font.BOLD, 40);
-		} catch(Exception e) {
-			Main.throwException(e);
+		if (AssetsLoader.font_android_101 != null) {
+			this.menuFont = AssetsLoader.font_android_101.deriveFont(Font.BOLD, 40f);
 		}
 
 		try {

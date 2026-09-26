@@ -77,10 +77,8 @@ public class GameLoop {
 // ======================================================================================================================================================
 
 	private void loadFpsFont() {
-		try {
-			this.fpsFont = AssetsLoader.loadFont("Android 101.ttf", Font.BOLD, 12);
-		} catch(Exception e) {
-			Main.throwException(e);
+		if (AssetsLoader.font_android_101 != null) {
+			this.fpsFont = AssetsLoader.font_android_101.deriveFont(Font.BOLD, 12f);
 		}
 	}
 
