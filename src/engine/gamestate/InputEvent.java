@@ -1,5 +1,7 @@
 package engine.gamestate;
 
+import java.awt.event.MouseEvent;
+
 public class InputEvent {
 
 // ======================================================================================================================================================
@@ -14,6 +16,14 @@ public class InputEvent {
 		MOUSE_DRAGGED,
 		MOUSE_MOVED
 	}
+
+	public static final int NONE = MouseEvent.NOBUTTON;
+	public static final int BUTTON1 = MouseEvent.BUTTON1;
+	public static final int BUTTON2 = MouseEvent.BUTTON2;
+	public static final int BUTTON3 = MouseEvent.BUTTON3;
+	public static final int LEFT = MouseEvent.BUTTON1;
+	public static final int MIDDLE = MouseEvent.BUTTON2;
+	public static final int RIGHT = MouseEvent.BUTTON3;
 
 // ======================================================================================================================================================
 

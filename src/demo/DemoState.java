@@ -3,7 +3,6 @@ package demo;
 import java.util.Set;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 import engine.Main;
 import engine.gamestate.GameState;
@@ -66,10 +65,10 @@ public class DemoState extends GameState {
 				this.demo.updateMousePosition(event.getX(), event.getY());
 			}
 
-			if (event.getType() == InputEvent.Type.MOUSE_PRESSED && event.getButton() == MouseEvent.BUTTON1) {
+			if (event.getType() == InputEvent.Type.MOUSE_PRESSED && event.getButton() == InputEvent.BUTTON1) {
 				this.demo.setShooting(true);
 				event.consume();
-			} else if (event.getType() == InputEvent.Type.MOUSE_RELEASED && event.getButton() == MouseEvent.BUTTON1) {
+			} else if (event.getType() == InputEvent.Type.MOUSE_RELEASED && event.getButton() == InputEvent.BUTTON1) {
 				this.demo.setShooting(false);
 				event.consume();
 			}
