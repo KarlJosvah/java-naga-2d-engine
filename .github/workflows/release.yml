@@ -29,7 +29,8 @@ jobs:
           cp -r assets/fonts/* bin-engine/assets/fonts/ 2>/dev/null || true
           find src/engine -name "*.java" > engine_sources.txt
           javac -source 11 -target 11 --add-exports java.desktop/sun.java2d.pipe.hw=ALL-UNNAMED -encoding UTF-8 -cp "lib/*" -d bin-engine/ @engine_sources.txt
-          jar cf lib/naga-engine.jar -C bin-engine/ .
+          jar cf lib/naga-engine-${{ github.ref_name }}.jar -C bin-engine/ .
+          cp lib/naga-engine-${{ github.ref_name }}.jar lib/naga-engine.jar
           rm -rf bin-engine engine_sources.txt
 
       - name: Build Demo Application
@@ -55,7 +56,7 @@ jobs:
         with:
           body_path: release-notes/${{ github.ref_name }}.md
           files: |
-            lib/naga-engine.jar
+            lib/naga-engine-${{ github.ref_name }}.jar
             naga-demo-bundle.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
