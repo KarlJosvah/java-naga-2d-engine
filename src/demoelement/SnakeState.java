@@ -1,13 +1,12 @@
 package demoelement;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import demoelement.core.BoardContext;
-import demoelement.entity.FoodElement;
-import demoelement.entity.GridElement;
-import demoelement.entity.SnakeElement;
-import demoelement.entity.SnakeHudElement;
+import demoelement.entity.Food;
+import demoelement.entity.Grid;
+import demoelement.entity.Snake;
+import demoelement.entity.SnakeHud;
 import engine.gamestate.GameState;
 import engine.gamestate.GameStateHandler;
 import engine.gamestate.StateID;
@@ -21,44 +20,42 @@ public class SnakeState extends GameState {
 	}
 
 	private BoardContext boardContext;
-	private GridElement gridElement;
-	private FoodElement foodElement;
-	private SnakeElement snakeElement;
-	private SnakeHudElement hudElement;
+	private Grid grid;
+	private Food food;
+	private Snake snake;
+	private SnakeHud hud;
 
 	public SnakeState() {
 	}
 
 	@Override
 	public void init() {
-		// Clean up any previously added elements on fresh init
-		clearElements();
+		this.clearElements();
 
-		boardContext = new BoardContext();
-		foodElement = new FoodElement(boardContext);
-		snakeElement = new SnakeElement(boardContext, foodElement);
-		gridElement = new GridElement(boardContext);
-		hudElement = new SnakeHudElement(boardContext, snakeElement);
+		this.boardContext = new BoardContext();
+		this.food = new Food(this.boardContext);
+		this.snake = new Snake(this.boardContext, this.food);
+		this.grid = new Grid(this.boardContext);
+		this.hud = new SnakeHud(this.boardContext, this.snake);
 
-		// Register elements in drawing/update order
-		addElement(gridElement);
-		addElement(foodElement);
-		addElement(snakeElement);
-		addElement(hudElement);
+		this.addElement(this.grid);
+		this.addElement(this.food);
+		this.addElement(this.snake);
+		this.addElement(this.hud);
 	}
 
 	@Override
 	public void tick(double elapsedSecond, long loopID) {
-		tickElements(elapsedSecond, loopID);
+		this.tickElements(elapsedSecond, loopID);
 	}
 
 	@Override
 	public void render(Graphics2D g, int renderWidth, int renderHeight) {
-		renderElements(g, renderWidth, renderHeight);
+		this.renderElements(g, renderWidth, renderHeight);
 	}
 
 	@Override
 	public void closeState() {
-		// State elements are automatically cleaned up by GameState
+		// Elements automatically closed and cleared by GameState
 	}
 }

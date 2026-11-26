@@ -11,25 +11,25 @@ import demoelement.core.BoardContext;
 import demoelement.core.Cell;
 import engine.gamestate.StateElement;
 
-public class FoodElement implements StateElement {
+public class Food implements StateElement {
 	private static final Color FOOD_COLOR = new Color(230, 70, 70);
 
 	private final BoardContext boardContext;
 	private final Random random = new Random();
 	private Cell position;
 
-	public FoodElement(BoardContext boardContext) {
+	public Food(BoardContext boardContext) {
 		this.boardContext = boardContext;
 	}
 
 	public Cell getPosition() {
-		return position;
+		return this.position;
 	}
 
 	public void respawn(Collection<Cell> occupiedCells) {
 		List<Cell> freeCells = new ArrayList<>();
-		int cols = boardContext.getColumns();
-		int rows = boardContext.getRows();
+		int cols = this.boardContext.getColumns();
+		int rows = this.boardContext.getRows();
 
 		for (int y = 0; y < rows; y++) {
 			for (int x = 0; x < cols; x++) {
@@ -41,22 +41,22 @@ public class FoodElement implements StateElement {
 		}
 
 		if (freeCells.isEmpty()) {
-			position = null;
+			this.position = null;
 		} else {
-			position = freeCells.get(random.nextInt(freeCells.size()));
+			this.position = freeCells.get(this.random.nextInt(freeCells.size()));
 		}
 	}
 
 	@Override
 	public void render(Graphics2D g, int renderWidth, int renderHeight) {
-		if (position == null) {
+		if (this.position == null) {
 			return;
 		}
 
-		int cellSize = boardContext.getCellSize();
+		int cellSize = this.boardContext.getCellSize();
 		int pad = Math.max(1, cellSize / 6);
-		int px = boardContext.toScreenX(position.getX()) + pad;
-		int py = boardContext.toScreenY(position.getY()) + pad;
+		int px = this.boardContext.toScreenX(this.position.getX()) + pad;
+		int py = this.boardContext.toScreenY(this.position.getY()) + pad;
 		int size = cellSize - 2 * pad;
 
 		g.setColor(FOOD_COLOR);

@@ -9,20 +9,20 @@ import demoelement.core.BoardContext;
 import engine.gamestate.StateElement;
 import engine.tools.AssetsLoader;
 
-public class SnakeHudElement implements StateElement {
+public class SnakeHud implements StateElement {
 	private static final Color OVERLAY_BG = new Color(0, 0, 0, 180);
 	private static final Color TEXT_COLOR = Color.WHITE;
 	private static final Color ACCENT_COLOR = new Color(180, 240, 90);
 
 	private final BoardContext boardContext;
-	private final SnakeElement snakeElement;
+	private final Snake snake;
 
 	private Font scoreFont;
 	private Font overlayFont;
 
-	public SnakeHudElement(BoardContext boardContext, SnakeElement snakeElement) {
+	public SnakeHud(BoardContext boardContext, Snake snake) {
 		this.boardContext = boardContext;
-		this.snakeElement = snakeElement;
+		this.snake = snake;
 
 		if (AssetsLoader.font_android_101 != null) {
 			this.scoreFont = AssetsLoader.font_android_101.deriveFont(Font.BOLD, 18f);
@@ -35,30 +35,30 @@ public class SnakeHudElement implements StateElement {
 
 	@Override
 	public void render(Graphics2D g, int renderWidth, int renderHeight) {
-		int originX = boardContext.getOriginX();
-		int originY = boardContext.getOriginY();
-		int boardWidth = boardContext.getBoardWidth();
-		int boardHeight = boardContext.getBoardHeight();
+		int originX = this.boardContext.getOriginX();
+		int originY = this.boardContext.getOriginY();
+		int boardWidth = this.boardContext.getBoardWidth();
+		int boardHeight = this.boardContext.getBoardHeight();
 
 		// Top HUD: Score
 		g.setColor(TEXT_COLOR);
-		g.setFont(scoreFont);
-		g.drawString("Score: " + snakeElement.getScore(), originX + 12, originY + 24);
+		g.setFont(this.scoreFont);
+		g.drawString("Score: " + this.snake.getScore(), originX + 12, originY + 24);
 
 		// Overlay if Paused or Game Over
 		String overlayTitle = null;
 		String overlaySubtitle = null;
 
-		if (snakeElement.isGameOver()) {
+		if (this.snake.isGameOver()) {
 			overlayTitle = "GAME OVER";
 			overlaySubtitle = "Press R to Restart";
-		} else if (snakeElement.isPaused()) {
+		} else if (this.snake.isPaused()) {
 			overlayTitle = "PAUSED";
 			overlaySubtitle = "Press SPACE or P to Resume";
 		}
 
 		if (overlayTitle != null) {
-			drawOverlay(g, overlayTitle, overlaySubtitle, originX, originY, boardWidth, boardHeight);
+			this.drawOverlay(g, overlayTitle, overlaySubtitle, originX, originY, boardWidth, boardHeight);
 		}
 	}
 
@@ -66,7 +66,7 @@ public class SnakeHudElement implements StateElement {
 		g.setColor(OVERLAY_BG);
 		g.fillRect(x, y, width, height);
 
-		g.setFont(overlayFont);
+		g.setFont(this.overlayFont);
 		FontMetrics fm = g.getFontMetrics();
 		int titleX = x + (width - fm.stringWidth(title)) / 2;
 		int titleY = y + (height / 2) - 10;
@@ -75,7 +75,7 @@ public class SnakeHudElement implements StateElement {
 		g.drawString(title, titleX, titleY);
 
 		if (subtitle != null) {
-			g.setFont(scoreFont);
+			g.setFont(this.scoreFont);
 			FontMetrics subFm = g.getFontMetrics();
 			int subX = x + (width - subFm.stringWidth(subtitle)) / 2;
 			int subY = titleY + 36;

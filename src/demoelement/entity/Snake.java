@@ -16,14 +16,14 @@ import engine.gamestate.GameState;
 import engine.gamestate.InputEvent;
 import engine.gamestate.StateElement;
 
-public class SnakeElement implements StateElement {
+public class Snake implements StateElement {
 	private static final Color HEAD_COLOR = new Color(180, 240, 90);
 	private static final Color BODY_COLOR = new Color(70, 180, 70);
 
 	private static final double MOVE_INTERVAL_SECONDS = 0.12; // ~8 ticks at 60 TPS
 
 	private final BoardContext boardContext;
-	private final FoodElement foodElement;
+	private final Food food;
 	private final Deque<Cell> body = new ArrayDeque<>();
 
 	private Direction direction = Direction.RIGHT;
@@ -34,34 +34,34 @@ public class SnakeElement implements StateElement {
 	private boolean gameOver = false;
 	private boolean paused = false;
 
-	public SnakeElement(BoardContext boardContext, FoodElement foodElement) {
+	public Snake(BoardContext boardContext, Food food) {
 		this.boardContext = boardContext;
-		this.foodElement = foodElement;
+		this.food = food;
 	}
 
 	@Override
 	public void init(GameState parentState) {
-		reset();
+		this.reset();
 	}
 
 	public void reset() {
-		body.clear();
-		int headX = boardContext.getColumns() / 2;
-		int headY = boardContext.getRows() / 2;
+		this.body.clear();
+		int headX = this.boardContext.getColumns() / 2;
+		int headY = this.boardContext.getRows() / 2;
 
-		body.addLast(new Cell(headX, headY));
-		body.addLast(new Cell(headX - 1, headY));
-		body.addLast(new Cell(headX - 2, headY));
+		this.body.addLast(new Cell(headX, headY));
+		this.body.addLast(new Cell(headX - 1, headY));
+		this.body.addLast(new Cell(headX - 2, headY));
 
-		direction = Direction.RIGHT;
-		nextDirection = Direction.RIGHT;
-		score = 0;
-		moveTimer = 0.0;
-		gameOver = false;
-		paused = false;
+		this.direction = Direction.RIGHT;
+		this.nextDirection = Direction.RIGHT;
+		this.score = 0;
+		this.moveTimer = 0.0;
+		this.gameOver = false;
+		this.paused = false;
 
-		if (foodElement != null) {
-			foodElement.respawn(body);
+		if (this.food != null) {
+			this.food.respawn(this.body);
 		}
 	}
 
@@ -69,7 +69,7 @@ public class SnakeElement implements StateElement {
 		if (newDirection == null) {
 			return;
 		}
-		if (newDirection.isOpposite(direction) || newDirection.isOpposite(nextDirection)) {
+		if (newDirection.isOpposite(this.direction) || newDirection.isOpposite(this.nextDirection)) {
 			return;
 		}
 		this.nextDirection = newDirection;
@@ -80,76 +80,76 @@ public class SnakeElement implements StateElement {
 	}
 
 	public boolean isPaused() {
-		return paused;
+		return this.paused;
 	}
 
 	public boolean isGameOver() {
-		return gameOver;
+		return this.gameOver;
 	}
 
 	public int getScore() {
-		return score;
+		return this.score;
 	}
 
 	public List<Cell> getBody() {
-		return Collections.unmodifiableList(new ArrayList<>(body));
+		return Collections.unmodifiableList(new ArrayList<>(this.body));
 	}
 
 	@Override
 	public void tick(double elapsedSecond, long loopID) {
-		if (paused || gameOver) {
+		if (this.paused || this.gameOver) {
 			return;
 		}
 
-		moveTimer += elapsedSecond;
-		if (moveTimer >= MOVE_INTERVAL_SECONDS) {
-			moveTimer -= MOVE_INTERVAL_SECONDS;
-			move();
+		this.moveTimer += elapsedSecond;
+		if (this.moveTimer >= MOVE_INTERVAL_SECONDS) {
+			this.moveTimer -= MOVE_INTERVAL_SECONDS;
+			this.move();
 		}
 	}
 
 	private void move() {
-		direction = nextDirection;
-		Cell head = body.peekFirst();
+		this.direction = this.nextDirection;
+		Cell head = this.body.peekFirst();
 		if (head == null) {
 			return;
 		}
 
-		Cell newHead = new Cell(head.getX() + direction.getDx(), head.getY() + direction.getDy());
+		Cell newHead = new Cell(head.getX() + this.direction.getDx(), head.getY() + this.direction.getDy());
 
 		// Wall collision
-		if (!boardContext.isWithinBounds(newHead.getX(), newHead.getY())) {
-			gameOver = true;
+		if (!this.boardContext.isWithinBounds(newHead.getX(), newHead.getY())) {
+			this.gameOver = true;
 			return;
 		}
 
 		// Self collision
-		boolean eating = foodElement != null && newHead.equals(foodElement.getPosition());
-		if (body.contains(newHead) && (eating || !newHead.equals(body.peekLast()))) {
-			gameOver = true;
+		boolean eating = this.food != null && newHead.equals(this.food.getPosition());
+		if (this.body.contains(newHead) && (eating || !newHead.equals(this.body.peekLast()))) {
+			this.gameOver = true;
 			return;
 		}
 
-		body.addFirst(newHead);
+		this.body.addFirst(newHead);
 		if (eating) {
-			score++;
-			foodElement.respawn(body);
+			this.score++;
+			this.food.respawn(this.body);
 		} else {
-			body.removeLast();
+			this.body.removeLast();
 		}
 	}
 
 	@Override
 	public void render(Graphics2D g, int renderWidth, int renderHeight) {
-		int cellSize = boardContext.getCellSize();
+		int cellSize = this.boardContext.getCellSize();
 		int pad = Math.max(1, cellSize / 8);
 		int innerSize = cellSize - 2 * pad;
 		int round = Math.max(2, cellSize / 3);
 
 		boolean isHead = true;
-		for (Cell cell : body) {
-			int px = boardContext.toScreenX(cell.getX()) + pad;
-			int py = boardContext.toScreenY(cell.getY()) + pad;
+		for (Cell cell : this.body) {
+			int px = this.boardContext.toScreenX(cell.getX()) + pad;
+			int py = this.boardContext.toScreenY(cell.getY()) + pad;
 
 			g.setColor(isHead ? HEAD_COLOR : BODY_COLOR);
 			g.fillRoundRect(px, py, innerSize, innerSize, round, round);
@@ -167,32 +167,32 @@ public class SnakeElement implements StateElement {
 		switch (code) {
 			case KeyEvent.VK_UP:
 			case KeyEvent.VK_W:
-				setDirection(Direction.UP);
+				this.setDirection(Direction.UP);
 				event.consume();
 				break;
 			case KeyEvent.VK_DOWN:
 			case KeyEvent.VK_S:
-				setDirection(Direction.DOWN);
+				this.setDirection(Direction.DOWN);
 				event.consume();
 				break;
 			case KeyEvent.VK_LEFT:
 			case KeyEvent.VK_A:
-				setDirection(Direction.LEFT);
+				this.setDirection(Direction.LEFT);
 				event.consume();
 				break;
 			case KeyEvent.VK_RIGHT:
 			case KeyEvent.VK_D:
-				setDirection(Direction.RIGHT);
+				this.setDirection(Direction.RIGHT);
 				event.consume();
 				break;
 			case KeyEvent.VK_SPACE:
 			case KeyEvent.VK_P:
-				togglePause();
+				this.togglePause();
 				event.consume();
 				break;
 			case KeyEvent.VK_R:
-				if (gameOver) {
-					reset();
+				if (this.gameOver) {
+					this.reset();
 					event.consume();
 				}
 				break;
