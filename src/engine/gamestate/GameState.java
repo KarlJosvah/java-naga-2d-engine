@@ -5,12 +5,17 @@ import java.awt.Point;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.RadialGradientPaint;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class GameState {
 
 // ======================================================================================================================================================
 
 	protected GameStateHandler stateHandler;
+
+	private final List<StateElement> elements = new CopyOnWriteArrayList<>();
+	private boolean initialized = false;
 
 	private int mousePositionX = -1;
 	private int mousePositionY = -1;
@@ -21,13 +26,66 @@ public abstract class GameState {
 
 	final void init(GameStateHandler stateHandler) {
 		this.stateHandler = stateHandler;
+		this.initialized = true;
 		this.init();
+		for (StateElement element : this.elements) {
+			element.init(this);
+		}
 	}
 
 	public abstract void init();
 	public abstract void tick(double elapsedSecond, long loopID);
 	public abstract void render(Graphics2D g, int renderWidth, int renderHeight);
 	public abstract void closeState();
+
+// ======================================================================================================================================================
+
+	public <T extends StateElement> T addElement(T element) {
+		if (element == null) {
+			throw new IllegalArgumentException("StateElement cannot be null");
+		}
+		this.elements.add(element);
+		if (this.initialized) {
+			element.init(this);
+		}
+		return element;
+	}
+
+	public void removeElement(StateElement element) {
+		if (element != null) {
+			element.close();
+			this.elements.remove(element);
+		}
+	}
+
+	public void clearElements() {
+		for (StateElement element : this.elements) {
+			element.close();
+		}
+		this.elements.clear();
+	}
+
+	public List<StateElement> getElements() {
+		return this.elements;
+	}
+
+	protected void tickElements(double elapsedSecond, long loopID) {
+		for (StateElement element : this.elements) {
+			element.tick(elapsedSecond, loopID);
+		}
+	}
+
+	protected void renderElements(Graphics2D g, int renderWidth, int renderHeight) {
+		for (StateElement element : this.elements) {
+			element.render(g, renderWidth, renderHeight);
+		}
+	}
+
+	final void closeInternal() {
+		this.closeState();
+		this.clearElements();
+		this.initialized = false;
+	}
 
 // ======================================================================================================================================================
 
@@ -64,6 +122,13 @@ public abstract class GameState {
 				break;
 			default:
 				break;
+		}
+
+		for (StateElement element : this.elements) {
+			if (event.isHandled()) {
+				break;
+			}
+			element.input(event);
 		}
 	}
 

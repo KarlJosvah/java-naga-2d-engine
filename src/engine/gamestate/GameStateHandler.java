@@ -104,7 +104,7 @@ public class GameStateHandler {
 
 	public void closeState() {
 		if (this.activeState != null) {
-			this.activeState.closeState();
+			this.activeState.closeInternal();
 		}
 	}
 
